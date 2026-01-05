@@ -1,0 +1,9 @@
+{{define "events"}}
+<ol class="event-list" aria-live="polite">
+  {{range .}}
+  <li data-severity="{{.Severity}}"><time>{{.Time.Format "15:04:05"}}</time><span>{{.Area}}</span><strong>{{.Message}}</strong></li>
+  {{else}}
+  <li>No recorded events.</li>
+  {{end}}
+</ol>
+{{end}}

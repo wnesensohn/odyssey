@@ -1,0 +1,18 @@
+{{define "propulsion"}}
+<section id="propulsion" aria-labelledby="propulsion-title">
+  <h2 id="propulsion-title">Propulsion</h2>
+  <p>Throttle requests are subject to feed-pressure and chamber-temperature interlocks.</p>
+  <form hx-post="/commands" hx-target="#command-result" hx-swap="innerHTML">
+    <input type="hidden" name="kind" value="set-throttle">
+    <label for="throttle">Requested throttle fraction</label>
+    <input id="throttle" name="value" type="number" min="0" max="1" step="0.01" value="0">
+    <button type="submit">Request throttle</button>
+  </form>
+  <form hx-post="/commands" hx-target="#command-result">
+    <input type="hidden" name="kind" value="stop-engine">
+    <input type="hidden" name="value" value="0">
+    <button type="submit" class="stop">Request engine stop</button>
+  </form>
+  <output id="command-result" aria-live="polite">No command submitted.</output>
+</section>
+{{end}}

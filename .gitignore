@@ -1,0 +1,7 @@
+flight/target/
+comms/ebin/
+console/mission-console
+*.beam
+erl_crash.dump
+.cache/
+*.log

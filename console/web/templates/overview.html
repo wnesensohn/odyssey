@@ -1,0 +1,40 @@
+{{define "overview"}}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ODYSSEY Mission Console</title>
+  <link rel="stylesheet" href="/static/console.css">
+  <script src="/static/htmx.min.js" defer></script>
+</head>
+<body>
+  <header><span class="mission-mark">ODYSSEY</span><h1>Mission console</h1></header>
+  <nav aria-label="Subsystems">
+    <a href="#telemetry">Vehicle telemetry</a>
+    <a href="#propulsion">Propulsion</a>
+    <a href="#power">Power</a>
+    <a href="#thermal">Thermal</a>
+    <a href="#events">Event journal</a>
+  </nav>
+  <main>
+    <section id="telemetry" aria-labelledby="telemetry-title">
+      <h2 id="telemetry-title">Vehicle telemetry</h2>
+      <div hx-get="/fragments/telemetry" hx-trigger="every 2s" hx-swap="innerHTML">
+        {{template "telemetry" .Samples}}
+      </div>
+    </section>
+    {{template "propulsion" .}}
+    {{template "power" .}}
+    {{template "thermal" .}}
+    <section id="events" aria-labelledby="events-title">
+      <h2 id="events-title">Event journal</h2>
+      <div hx-get="/fragments/events" hx-trigger="every 3s" hx-swap="innerHTML">
+        {{template "events" .Events}}
+      </div>
+    </section>
+  </main>
+  <footer>Orbital Dynamics, Sapience, Shaping, Exploration &amp; Yonder</footer>
+</body>
+</html>
+{{end}}

@@ -1,0 +1,13 @@
+{{define "telemetry"}}
+<table class="telemetry-table">
+  <caption>Fresh observations from the flight controller</caption>
+  <thead><tr><th scope="col">Channel</th><th scope="col">Value</th><th scope="col">Unit</th><th scope="col">Quality</th></tr></thead>
+  <tbody>
+    {{range .}}
+    <tr><th scope="row">{{.Channel}}</th><td class="numeric">{{printf "%.3f" .Value}}</td><td>{{.Unit}}</td><td>{{.Quality}}</td></tr>
+    {{else}}
+    <tr><td colspan="4" role="status">No current telemetry. Check ground-link health.</td></tr>
+    {{end}}
+  </tbody>
+</table>
+{{end}}

@@ -1,0 +1,5 @@
+time_ms,feed_pressure_kpa,chamber_temperature_k,pump_current_a
+0,300,500,5
+100,300,500,20
+200,150,480,0
+300,100,450,0

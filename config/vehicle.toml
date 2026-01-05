@@ -1,0 +1,26 @@
+[propulsion]
+feed_target_kpa = 300.0
+ignition_minimum_kpa = 250.0
+running_minimum_kpa = 180.0
+maximum_chamber_temperature_k = 1250.0
+pump_current_limit_a = 18.0
+
+[power]
+battery_capacity_wh = 2400.0
+minimum_reserve_fraction = 0.20
+solar_area_m2 = 12.0
+solar_efficiency = 0.30
+
+[thermal]
+heater_enable_k = 280.0
+heater_disable_k = 290.0
+maximum_heater_power_w = 5000.0
+
+[communications]
+pending_window = 16
+retry_timeout_ms = 500
+maximum_payload_bytes = 1024
+
+[navigation]
+earth_mu_m3s2 = 398600441800000.0
+maximum_propagation_step_s = 10.0
