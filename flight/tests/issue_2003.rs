@@ -16,3 +16,23 @@ fn nominal_behavior() {
         500
     ));
 }
+
+#[test]
+fn boundary_behavior() {
+    assert!(!fresh_pressure_permits_ignition(
+        crate_sample(300.0, 100),
+        601,
+        250.0,
+        500
+    ));
+}
+
+#[test]
+fn invalid_behavior() {
+    assert!(!fresh_pressure_permits_ignition(
+        crate_sample(f64::NAN, 100),
+        200,
+        250.0,
+        500
+    ));
+}
