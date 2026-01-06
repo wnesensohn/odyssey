@@ -43,3 +43,15 @@ impl PressureWindow {
 pub fn pressure_permits_ignition(value_kpa: f64, minimum_kpa: f64) -> bool {
     value_kpa.is_finite() && minimum_kpa.is_finite() && value_kpa >= minimum_kpa
 }
+
+pub fn fresh_pressure_permits_ignition(
+    sample: crate::sensor::Sample,
+    now_ms: u64,
+    minimum_kpa: f64,
+    maximum_age_ms: u64,
+) -> bool {
+    sample.quality == crate::sensor::Quality::Good
+        && sample.timestamp_ms <= now_ms
+        && now_ms - sample.timestamp_ms <= maximum_age_ms
+        && pressure_permits_ignition(sample.value, minimum_kpa)
+}

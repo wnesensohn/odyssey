@@ -19,3 +19,12 @@ changes in the release notes when the behavior affects an operator or peer.
 
 Use the domain owner listed in CONTRIBUTING.md. A cross-subsystem change must
 state the contract dependency and include its peer-side vector or test.
+
+## Pump pressure interlock
+
+Reject stale feed-pressure observations before enabling ignition.
+
+`flight/src/propulsion/pressure.rs` exposes `fresh_pressure_permits_ignition`. Values use SI units, except
+pressure in kPa, energy in Wh and mission time in milliseconds. Invalid numeric
+inputs fail before the output is applied to an actuator. Callers must handle the
+returned result; an error never authorizes an actuator transition.
