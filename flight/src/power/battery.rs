@@ -35,3 +35,14 @@ impl Battery {
         Ok(self.fraction())
     }
 }
+
+pub fn reserve_band(fraction: f64) -> Result<&'static str, crate::ControlError> {
+    crate::finite_in_range(fraction, 0.0, 1.0)?;
+    Ok(if fraction < 0.10 {
+        "critical"
+    } else if fraction < 0.20 {
+        "reserve"
+    } else {
+        "nominal"
+    })
+}
