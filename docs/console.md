@@ -19,3 +19,12 @@ changes in the release notes when the behavior affects an operator or peer.
 
 Use the domain owner listed in CONTRIBUTING.md. A cross-subsystem change must
 state the contract dependency and include its peer-side vector or test.
+
+## Command lifetime validation
+
+Reject commands whose lifetime or time ordering cannot be represented safely.
+
+`console/internal/commands` exposes `ValidatedLifetime` to console adapters.
+All timestamps are UTC, and operators are identified by their controller session.
+Rejected requests do not authorize a flight command. Queue limits are independent
+of display polling intervals.
