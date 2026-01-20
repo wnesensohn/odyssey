@@ -31,7 +31,7 @@ func Validate(command Command, now time.Time) error {
 	if command.Operator == "" || command.Issued.IsZero() || command.Issued.After(now) || command.Expires.Before(now) {
 		return errors.New("command identity or timing is invalid")
 	}
-	if command.Expires.Sub(command.Issued) > time.Minute || command.Expires.Before(command.Issued) {
+	if _, err := ValidatedLifetime(command.Issued, command.Expires, now); err != nil {
 		return errors.New("command lifetime exceeds limit")
 	}
 	if math.IsNaN(command.Value) || math.IsInf(command.Value, 0) {

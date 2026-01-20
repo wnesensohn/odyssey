@@ -29,3 +29,7 @@ output { display: block; min-height: 1.5rem; }
 [data-severity="warning"] { color: var(--warning); }
 footer { color: #aac0d7; }
 @media (max-width: 42rem) { header { display: block; } th, td { padding: 0.4rem; } }
+
+.quality-badge { padding: .2rem .45rem; border: 1px solid currentColor; border-radius: .25rem; }
+.quality-badge[data-quality="degraded"] { color: #ffbf47; }
+.quality-badge[data-quality="invalid"] { color: #ff7777; }

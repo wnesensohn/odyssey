@@ -19,3 +19,11 @@ changes in the release notes when the behavior affects an operator or peer.
 
 Use the domain owner listed in CONTRIBUTING.md. A cross-subsystem change must
 state the contract dependency and include its peer-side vector or test.
+
+## Ground link retry window
+
+Bound retries and report frames exhausted by the retransmission window.
+
+`comms/src/transport/odyssey_window.erl` exposes `retry_budget/2`. Link times are monotonic
+milliseconds; sequence fields use unsigned network byte order. Rejection is
+reported to the caller and must not be converted into an acknowledged delivery.
