@@ -103,3 +103,12 @@ impl RateController {
         Ok(output)
     }
 }
+
+pub fn orientation_error_rad(a: Quaternion, b: Quaternion) -> Result<f64, crate::ControlError> {
+    let a = a.normalized()?;
+    let b = b.normalized()?;
+    let dot = (a.w * b.w + a.x * b.x + a.y * b.y + a.z * b.z)
+        .abs()
+        .clamp(0.0, 1.0);
+    Ok(2.0 * dot.acos())
+}
