@@ -19,3 +19,12 @@ changes in the release notes when the behavior affects an operator or peer.
 
 Use the domain owner listed in CONTRIBUTING.md. A cross-subsystem change must
 state the contract dependency and include its peer-side vector or test.
+
+## Quaternion error budget
+
+Calculate shortest-path orientation error and cap requested angular correction.
+
+`flight/src/guidance/attitude.rs` exposes `orientation_error_rad`. Values use SI units, except
+pressure in kPa, energy in Wh and mission time in milliseconds. Invalid numeric
+inputs fail before the output is applied to an actuator. Callers must handle the
+returned result; an error never authorizes an actuator transition.
