@@ -16,3 +16,21 @@ func TestIssue2024Nominal(t *testing.T) {
 		t.Fatal("retention failed")
 	}
 }
+
+func TestIssue2024Boundary(t *testing.T) {
+	now := time.Unix(100, 0)
+	_ = now
+	cache, _ := NewCache(4)
+	if cache.RetainChannel("pump", 0) == nil {
+		t.Fatal("accepted zero retention")
+	}
+}
+
+func TestIssue2024Invalid(t *testing.T) {
+	now := time.Unix(100, 0)
+	_ = now
+	cache, _ := NewCache(4)
+	if cache.RetainChannel("missing", 2) != nil {
+		t.Fatal("empty retention failed")
+	}
+}
