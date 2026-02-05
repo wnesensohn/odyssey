@@ -31,6 +31,9 @@ func CRC16(data []byte) uint16 {
 }
 
 func Encode(frame Frame) ([]byte, error) {
+	if !ValidKind(frame.Kind) {
+		return nil, errors.New("unsupported frame kind")
+	}
 	if len(frame.Payload) > MaxPayload {
 		return nil, errors.New("payload exceeds frame limit")
 	}
@@ -45,7 +48,7 @@ func Encode(frame Frame) ([]byte, error) {
 }
 
 func Decode(data []byte) (Frame, error) {
-	if len(data) < 10 || string(data[:2]) != "OD" || data[2] != Version {
+	if len(data) < 10 || !ValidKind(data[3]) || string(data[:2]) != "OD" || data[2] != Version {
 		return Frame{}, errors.New("invalid frame header")
 	}
 	length := int(binary.BigEndian.Uint16(data[6:8]))
@@ -76,3 +79,5 @@ func Read(reader io.Reader) (Frame, error) {
 	}
 	return Decode(append(header, tail...))
 }
+
+func ValidKind(kind byte) bool { return kind >= 1 && kind <= 3 }

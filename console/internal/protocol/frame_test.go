@@ -46,10 +46,10 @@ func TestEveryTruncationAndBitCorruptionIsRejected(t *testing.T) {
 	}
 }
 func TestOversizedAndTrailingFramesAreRejected(t *testing.T) {
-	if _, err := Encode(Frame{Payload: make([]byte, MaxPayload+1)}); err == nil {
+	if _, err := Encode(Frame{Kind: 1, Payload: make([]byte, MaxPayload+1)}); err == nil {
 		t.Fatal("accepted oversized payload")
 	}
-	data, _ := Encode(Frame{Payload: []byte{1}})
+	data, _ := Encode(Frame{Kind: 1, Payload: []byte{1}})
 	if _, err := Decode(append(data, 0)); err == nil {
 		t.Fatal("accepted trailing bytes")
 	}

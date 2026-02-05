@@ -27,3 +27,11 @@ Bound retries and report frames exhausted by the retransmission window.
 `comms/src/transport/odyssey_window.erl` exposes `retry_budget/2`. Link times are monotonic
 milliseconds; sequence fields use unsigned network byte order. Rejection is
 reported to the caller and must not be converted into an acknowledged delivery.
+
+## Frame kind validation
+
+Define compatible command/ack/telemetry kind validation in all peer codecs.
+
+`comms/src/transport/odyssey_frame.erl` exposes `valid_kind/1`. Link times are monotonic
+milliseconds; sequence fields use unsigned network byte order. Rejection is
+reported to the caller and must not be converted into an acknowledged delivery.

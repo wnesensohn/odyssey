@@ -36,3 +36,12 @@ Render invalid and degraded samples with clear status labels.
 The mission console renders the change through local Go templates and HTMX
 fragments. Controller authentication and flight interlocks remain authoritative.
 Labels are escaped by the template engine; no third-party asset request is needed.
+
+## Telemetry channel retention
+
+Support per-channel retention while preserving ordered snapshots.
+
+`console/internal/telemetry` exposes `RetainChannel` to console adapters.
+All timestamps are UTC, and operators are identified by their controller session.
+Rejected requests do not authorize a flight command. Queue limits are independent
+of display polling intervals.
