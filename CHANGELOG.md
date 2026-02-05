@@ -17,3 +17,10 @@ Release entries describe observable interface or operating changes.
 - Classify reserve bands and distinguish charging from discharge margin.
 - Reject commands whose lifetime or time ordering cannot be represented safely.
 - Render invalid and degraded samples with clear status labels.
+
+## 3.2.0
+
+- Integrate heater energy and reject requests exceeding a bounded interval budget.
+- Calculate shortest-path orientation error and cap requested angular correction.
+- Support per-channel retention while preserving ordered snapshots.
+- Define compatible command/ack/telemetry kind validation in all peer codecs.
