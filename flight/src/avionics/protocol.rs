@@ -26,6 +26,9 @@ pub fn checksum(bytes: &[u8]) -> u16 {
 }
 
 pub fn encode(frame: &Frame) -> Result<Vec<u8>, ControlError> {
+    if !valid_kind(frame.kind) {
+        return Err(ControlError::InvalidFrame);
+    }
     if frame.payload.len() > MAX_PAYLOAD {
         return Err(ControlError::CapacityExceeded);
     }
@@ -41,7 +44,8 @@ pub fn encode(frame: &Frame) -> Result<Vec<u8>, ControlError> {
 }
 
 pub fn decode(bytes: &[u8]) -> Result<Frame, ControlError> {
-    if bytes.len() < 10 || bytes[..2] != MAGIC || bytes[2] != WIRE_VERSION {
+    if bytes.len() < 10 || !valid_kind(bytes[3]) || bytes[..2] != MAGIC || bytes[2] != WIRE_VERSION
+    {
         return Err(ControlError::InvalidFrame);
     }
     let length = u16::from_be_bytes([bytes[6], bytes[7]]) as usize;
@@ -57,4 +61,8 @@ pub fn decode(bytes: &[u8]) -> Result<Frame, ControlError> {
         sequence: u16::from_be_bytes([bytes[4], bytes[5]]),
         payload: bytes[8..8 + length].to_vec(),
     })
+}
+
+pub fn valid_kind(kind: u8) -> bool {
+    matches!(kind, 1..=3)
 }
