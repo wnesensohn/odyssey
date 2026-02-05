@@ -1,4 +1,5 @@
 -module(odyssey_frame).
+-export([valid_kind/1]).
 -export([encode/3, decode/1, crc16/1, split_stream/1]).
 
 -define(MAX_PAYLOAD, 1024).
@@ -6,8 +7,8 @@
 -spec encode(0..255, 0..65535, binary()) -> {ok, binary()} | {error, atom()}.
 encode(Kind, Sequence, Payload) when
     is_integer(Kind),
-    Kind >= 0,
-    Kind =< 255,
+    Kind >= 1,
+    Kind =< 3,
     is_integer(Sequence),
     Sequence >= 0,
     Sequence =< 65535,
@@ -21,7 +22,7 @@ encode(_, _, _) ->
 
 -spec decode(binary()) -> {ok, map()} | {error, atom()}.
 decode(<<"OD", 3, Kind, Sequence:16/big, Length:16/big, Rest/binary>> = Frame) when
-    Length =< ?MAX_PAYLOAD, byte_size(Rest) =:= Length + 2
+    Kind >= 1, Kind =< 3, Length =< ?MAX_PAYLOAD, byte_size(Rest) =:= Length + 2
 ->
     <<Payload:Length/binary, Expected:16/big>> = Rest,
     Content = binary:part(Frame, 0, byte_size(Frame) - 2),
@@ -68,3 +69,5 @@ split_stream(<<"OD", 3, _Kind, _Sequence:16, Length:16, _/binary>> = Bytes, Acc)
     end;
 split_stream(_, _) ->
     {error, invalid_stream}.
+
+valid_kind(Kind) -> Kind =:= 1 orelse Kind =:= 2 orelse Kind =:= 3.
