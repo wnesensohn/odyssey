@@ -65,3 +65,23 @@ impl Valve {
         Ok(self.position)
     }
 }
+
+pub fn debounced_position(
+    observations: &[(bool, bool)],
+    quorum: usize,
+) -> Result<Option<bool>, crate::ControlError> {
+    if quorum == 0 || quorum > observations.len() {
+        return Err(crate::ControlError::OutOfRange);
+    }
+    if observations.iter().any(|&(open, closed)| open && closed) {
+        return Err(crate::ControlError::InvalidSample);
+    }
+    let tail = &observations[observations.len() - quorum..];
+    if tail.iter().all(|&(open, closed)| open && !closed) {
+        Ok(Some(true))
+    } else if tail.iter().all(|&(open, closed)| !open && closed) {
+        Ok(Some(false))
+    } else {
+        Ok(None)
+    }
+}
