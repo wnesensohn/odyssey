@@ -28,3 +28,12 @@ Reject stale feed-pressure observations before enabling ignition.
 pressure in kPa, energy in Wh and mission time in milliseconds. Invalid numeric
 inputs fail before the output is applied to an actuator. Callers must handle the
 returned result; an error never authorizes an actuator transition.
+
+## Valve position debounce
+
+Debounce switches without treating contradictory positions as valid.
+
+`flight/src/propulsion/valve.rs` exposes `debounced_position`. Values use SI units, except
+pressure in kPa, energy in Wh and mission time in milliseconds. Invalid numeric
+inputs fail before the output is applied to an actuator. Callers must handle the
+returned result; an error never authorizes an actuator transition.
