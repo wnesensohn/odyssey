@@ -15,3 +15,8 @@ fn boundary_behavior() {
         None
     );
 }
+
+#[test]
+fn invalid_behavior() {
+    assert!(debounced_position(&[(true, true)], 1).is_err());
+}
