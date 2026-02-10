@@ -7,3 +7,11 @@ fn nominal_behavior() {
         Some(true)
     );
 }
+
+#[test]
+fn boundary_behavior() {
+    assert_eq!(
+        debounced_position(&[(true, false), (false, false)], 2).unwrap(),
+        None
+    );
+}
