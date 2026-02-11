@@ -24,3 +24,7 @@ Release entries describe observable interface or operating changes.
 - Calculate shortest-path orientation error and cap requested angular correction.
 - Support per-channel retention while preserving ordered snapshots.
 - Define compatible command/ack/telemetry kind validation in all peer codecs.
+
+## 3.2.1
+
+- Reject commands at their exact expiry instant.
