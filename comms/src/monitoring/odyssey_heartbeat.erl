@@ -1,4 +1,5 @@
 -module(odyssey_heartbeat).
+-export([recovery_ready/2]).
 -export([new/1, observe/2, state/2]).
 
 new(TimeoutMs) when is_integer(TimeoutMs), TimeoutMs > 0 ->
@@ -24,3 +25,12 @@ state(Heartbeat, NowMs) ->
                 true -> disconnected
             end
     end.
+
+recovery_ready(Observations, Quorum) when is_list(Observations), is_integer(Quorum), Quorum > 0 ->
+    length(Observations) >= Quorum andalso
+        lists:all(
+            fun(Value) -> Value =:= connected end,
+            lists:sublist(lists:reverse(Observations), Quorum)
+        );
+recovery_ready(_, _) ->
+    false.
