@@ -74,3 +74,18 @@ func TestQueueCapacityAndExpiredDrain(t *testing.T) {
 		t.Fatal("expired queue did not drain")
 	}
 }
+
+func TestExactExpiryNeverEnqueuesOrDispatches(t *testing.T) {
+	now := time.Unix(100, 0)
+	command := Command{Kind: Safe, Operator: "operator", Issued: now, Expires: now.Add(time.Second)}
+	service, _ := NewService(4)
+	if _, err := service.Submit(command, now); err != nil {
+		t.Fatal(err)
+	}
+	if _, ok := service.Next(command.Expires); ok {
+		t.Fatal("expired command dispatched")
+	}
+	if err := Validate(command, command.Expires); err == nil {
+		t.Fatal("expired command accepted")
+	}
+}
