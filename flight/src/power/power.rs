@@ -43,3 +43,12 @@ pub fn solar_output(
     finite_in_range(efficiency, 0.0, 1.0)?;
     Ok(area_m2 * 1361.0 * incidence_rad.cos().max(0.0) * efficiency)
 }
+
+pub fn unsupplied_loads(available_w: f64, loads: &[Load]) -> Result<Vec<u16>, crate::ControlError> {
+    let supplied = allocate_power(available_w, loads)?;
+    Ok(loads
+        .iter()
+        .filter(|load| !supplied.contains(&load.id))
+        .map(|load| load.id)
+        .collect())
+}
