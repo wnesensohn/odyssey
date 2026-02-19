@@ -45,3 +45,12 @@ Support per-channel retention while preserving ordered snapshots.
 All timestamps are UTC, and operators are identified by their controller session.
 Rejected requests do not authorize a flight command. Queue limits are independent
 of display polling intervals.
+
+## Operator session revocation
+
+Invalidate controller tokens after role changes and record revocation cause.
+
+`console/internal/session` exposes `RevokeOperator` to console adapters.
+All timestamps are UTC, and operators are identified by their controller session.
+Rejected requests do not authorize a flight command. Queue limits are independent
+of display polling intervals.
