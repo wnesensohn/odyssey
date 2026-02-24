@@ -13,6 +13,11 @@
     <input type="hidden" name="value" value="0">
     <button type="submit" class="stop">Request engine stop</button>
   </form>
+  <form hx-post="/commands" hx-target="#command-result" hx-confirm="Arm the engine? Verify the feed interlocks before proceeding.">
+    <input type="hidden" name="kind" value="arm-engine">
+    <input type="hidden" name="value" value="0">
+    <button type="submit">Request engine arm</button>
+  </form>
   <output id="command-result" aria-live="polite">No command submitted.</output>
 </section>
 {{end}}
