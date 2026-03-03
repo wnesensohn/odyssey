@@ -1,6 +1,6 @@
 {application, odyssey_comms, [
     {description, "ODYSSEY ground-link communications"},
-    {vsn, "3.2.1"},
+    {vsn, "3.3.0"},
     {modules, [odyssey_app, odyssey_sup, odyssey_frame, odyssey_window,
                odyssey_session, odyssey_router, odyssey_heartbeat, odyssey_queue]},
     {registered, [odyssey_sup, odyssey_router]},

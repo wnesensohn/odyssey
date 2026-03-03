@@ -45,3 +45,20 @@ Support per-channel retention while preserving ordered snapshots.
 All timestamps are UTC, and operators are identified by their controller session.
 Rejected requests do not authorize a flight command. Queue limits are independent
 of display polling intervals.
+
+## Operator session revocation
+
+Invalidate controller tokens after role changes and record revocation cause.
+
+`console/internal/session` exposes `RevokeOperator` to console adapters.
+All timestamps are UTC, and operators are identified by their controller session.
+Rejected requests do not authorize a flight command. Queue limits are independent
+of display polling intervals.
+
+## Engine command confirmation
+
+Add an explicit operator confirmation step to engine-arm requests.
+
+The mission console renders the change through local Go templates and HTMX
+fragments. Controller authentication and flight interlocks remain authoritative.
+Labels are escaped by the template engine; no third-party asset request is needed.

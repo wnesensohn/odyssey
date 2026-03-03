@@ -28,3 +28,12 @@ Classify reserve bands and distinguish charging from discharge margin.
 pressure in kPa, energy in Wh and mission time in milliseconds. Invalid numeric
 inputs fail before the output is applied to an actuator. Callers must handle the
 returned result; an error never authorizes an actuator transition.
+
+## Payload load shedding
+
+Explain unsupplied payload loads and preserve flight-control allocation.
+
+`flight/src/power/power.rs` exposes `unsupplied_loads`. Values use SI units, except
+pressure in kPa, energy in Wh and mission time in milliseconds. Invalid numeric
+inputs fail before the output is applied to an actuator. Callers must handle the
+returned result; an error never authorizes an actuator transition.
