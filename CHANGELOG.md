@@ -28,3 +28,10 @@ Release entries describe observable interface or operating changes.
 ## 3.2.1
 
 - Reject commands at their exact expiry instant.
+
+## 3.3.0
+
+- Explain unsupplied payload loads and preserve flight-control allocation.
+- Invalidate controller tokens after role changes and record revocation cause.
+- Add an explicit operator confirmation step to engine-arm requests.
+- Reject outliers before selecting redundant thermal sensor readings.
