@@ -63,3 +63,23 @@ pub fn heater_energy_wh(
     }
     Ok(energy)
 }
+
+pub fn voted_temperature(
+    samples: &[f64],
+    maximum_spread_k: f64,
+) -> Result<f64, crate::ControlError> {
+    crate::finite_in_range(maximum_spread_k, 0.0, 100.0)?;
+    if samples.len() < 3 {
+        return Err(crate::ControlError::InvalidSample);
+    }
+    let middle = crate::filter::median(samples)?;
+    let accepted: Vec<f64> = samples
+        .iter()
+        .copied()
+        .filter(|value| (value - middle).abs() <= maximum_spread_k)
+        .collect();
+    if accepted.len() * 2 <= samples.len() {
+        return Err(crate::ControlError::InvalidSample);
+    }
+    crate::filter::median(&accepted)
+}

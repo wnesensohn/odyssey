@@ -28,3 +28,12 @@ Integrate heater energy and reject requests exceeding a bounded interval budget.
 pressure in kPa, energy in Wh and mission time in milliseconds. Invalid numeric
 inputs fail before the output is applied to an actuator. Callers must handle the
 returned result; an error never authorizes an actuator transition.
+
+## Thermal sensor voting
+
+Reject outliers before selecting redundant thermal sensor readings.
+
+`flight/src/thermal/thermal.rs` exposes `voted_temperature`. Values use SI units, except
+pressure in kPa, energy in Wh and mission time in milliseconds. Invalid numeric
+inputs fail before the output is applied to an actuator. Callers must handle the
+returned result; an error never authorizes an actuator transition.
