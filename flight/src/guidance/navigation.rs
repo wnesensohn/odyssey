@@ -57,3 +57,13 @@ pub fn horizon_angle(radius_m: f64, body_radius_m: f64) -> Result<f64, ControlEr
     finite_in_range(radius_m, body_radius_m, 1e10)?;
     Ok((body_radius_m / radius_m).acos())
 }
+
+pub fn propagation_interval_ms(previous_ms: u64, next_ms: u64) -> Result<u64, crate::ControlError> {
+    let interval = next_ms
+        .checked_sub(previous_ms)
+        .ok_or(crate::ControlError::InvalidTransition)?;
+    if interval > 10_000 {
+        return Err(crate::ControlError::OutOfRange);
+    }
+    Ok(interval)
+}

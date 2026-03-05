@@ -28,3 +28,12 @@ Calculate shortest-path orientation error and cap requested angular correction.
 pressure in kPa, energy in Wh and mission time in milliseconds. Invalid numeric
 inputs fail before the output is applied to an actuator. Callers must handle the
 returned result; an error never authorizes an actuator transition.
+
+## Orbit propagation bounds
+
+Report valid propagation intervals and reject nonfinite derived state.
+
+`flight/src/guidance/navigation.rs` exposes `propagation_interval_ms`. Values use SI units, except
+pressure in kPa, energy in Wh and mission time in milliseconds. Invalid numeric
+inputs fail before the output is applied to an actuator. Callers must handle the
+returned result; an error never authorizes an actuator transition.
