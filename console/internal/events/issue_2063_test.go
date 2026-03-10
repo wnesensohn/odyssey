@@ -17,3 +17,24 @@ func TestIssue2063Nominal(t *testing.T) {
 		t.Fatal("gap missing")
 	}
 }
+
+func TestIssue2063Boundary(t *testing.T) {
+	now := time.Unix(100, 0)
+	_ = now
+	journal, _ := NewJournal(1)
+	events, gap := journal.SinceWithGap(0)
+	if gap || len(events) != 0 {
+		t.Fatal("empty gap")
+	}
+}
+
+func TestIssue2063Invalid(t *testing.T) {
+	now := time.Unix(100, 0)
+	_ = now
+	journal, _ := NewJournal(1)
+	_, _ = journal.Append(Event{Time: now, Area: "power", Severity: "info", Message: "nominal"})
+	_, gap := journal.SinceWithGap(0)
+	if gap {
+		t.Fatal("false gap")
+	}
+}
