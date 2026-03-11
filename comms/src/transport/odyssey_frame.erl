@@ -1,4 +1,5 @@
 -module(odyssey_frame).
+-export([sequence_class/3]).
 -export([valid_kind/1]).
 -export([encode/3, decode/1, crc16/1, split_stream/1]).
 
@@ -71,3 +72,15 @@ split_stream(_, _) ->
     {error, invalid_stream}.
 
 valid_kind(Kind) -> Kind =:= 1 orelse Kind =:= 2 orelse Kind =:= 3.
+
+sequence_class(Previous, Current, Window) when
+    is_integer(Previous), is_integer(Current), is_integer(Window), Window > 0, Window < 32768
+->
+    Delta = (Current - Previous) band 16#ffff,
+    if
+        Delta =:= 0 -> duplicate;
+        Delta =< Window -> next;
+        true -> stale
+    end;
+sequence_class(_, _, _) ->
+    invalid.
