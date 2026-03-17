@@ -35,3 +35,10 @@ Release entries describe observable interface or operating changes.
 - Invalidate controller tokens after role changes and record revocation cause.
 - Add an explicit operator confirmation step to engine-arm requests.
 - Reject outliers before selecting redundant thermal sensor readings.
+
+## 3.4.0
+
+- Report valid propagation intervals and reject nonfinite derived state.
+- Report journal gaps to observers instead of silently hiding dropped entries.
+- Classify duplicate and stale sequence numbers in the negotiated window.
+- Detect low inlet pressure during pump startup and latch a clear trip reason.

@@ -37,3 +37,12 @@ Debounce switches without treating contradictory positions as valid.
 pressure in kPa, energy in Wh and mission time in milliseconds. Invalid numeric
 inputs fail before the output is applied to an actuator. Callers must handle the
 returned result; an error never authorizes an actuator transition.
+
+## Pump startup cavitation
+
+Detect low inlet pressure during pump startup and latch a clear trip reason.
+
+`flight/src/propulsion/pump.rs` exposes `cavitation_margin_kpa`. Values use SI units, except
+pressure in kPa, energy in Wh and mission time in milliseconds. Invalid numeric
+inputs fail before the output is applied to an actuator. Callers must handle the
+returned result; an error never authorizes an actuator transition.
