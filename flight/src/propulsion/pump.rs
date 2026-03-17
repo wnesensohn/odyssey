@@ -73,3 +73,13 @@ impl PumpController {
         Ok(self.duty)
     }
 }
+
+pub fn cavitation_margin_kpa(inlet_kpa: f64, vapour_kpa: f64) -> Result<f64, crate::ControlError> {
+    crate::finite_in_range(inlet_kpa, 0.0, 1500.0)?;
+    crate::finite_in_range(vapour_kpa, 0.0, 1500.0)?;
+    let margin = inlet_kpa - vapour_kpa;
+    if margin < 25.0 {
+        return Err(crate::ControlError::InterlockOpen);
+    }
+    Ok(margin)
+}
