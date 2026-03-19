@@ -51,3 +51,11 @@ Classify duplicate and stale sequence numbers in the negotiated window.
 `comms/src/transport/odyssey_frame.erl` exposes `sequence_class/3`. Link times are monotonic
 milliseconds; sequence fields use unsigned network byte order. Rejection is
 reported to the caller and must not be converted into an acknowledged delivery.
+
+## Bounded ground link acceptors
+
+Limit simultaneous gateway workers and shut them down with their listener.
+
+`comms/src/transport/odyssey_gateway.erl` exposes `admit_worker/2`. Link times are monotonic
+milliseconds; sequence fields use unsigned network byte order. Rejection is
+reported to the caller and must not be converted into an acknowledged delivery.
