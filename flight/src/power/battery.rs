@@ -46,3 +46,13 @@ pub fn reserve_band(fraction: f64) -> Result<&'static str, crate::ControlError> 
         "nominal"
     })
 }
+
+pub fn charge_acceptance_fraction(temperature_k: f64) -> Result<f64, crate::ControlError> {
+    crate::finite_in_range(temperature_k, 200.0, 400.0)?;
+    if !(273.15..=323.15).contains(&temperature_k) {
+        return Ok(0.0);
+    }
+    Ok(((temperature_k - 273.15) / 10.0)
+        .min((323.15 - temperature_k) / 10.0)
+        .clamp(0.0, 1.0))
+}
