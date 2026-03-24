@@ -37,3 +37,12 @@ Explain unsupplied payload loads and preserve flight-control allocation.
 pressure in kPa, energy in Wh and mission time in milliseconds. Invalid numeric
 inputs fail before the output is applied to an actuator. Callers must handle the
 returned result; an error never authorizes an actuator transition.
+
+## Battery charge temperature
+
+Apply a temperature-dependent charge acceptance envelope.
+
+`flight/src/power/battery.rs` exposes `charge_acceptance_fraction`. Values use SI units, except
+pressure in kPa, energy in Wh and mission time in milliseconds. Invalid numeric
+inputs fail before the output is applied to an actuator. Callers must handle the
+returned result; an error never authorizes an actuator transition.
