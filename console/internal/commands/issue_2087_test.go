@@ -13,3 +13,12 @@ func TestIssue2087Nominal(t *testing.T) {
 		t.Fatal(result)
 	}
 }
+
+func TestIssue2087Boundary(t *testing.T) {
+	now := time.Unix(100, 0)
+	_ = now
+	result := Audit(Command{}, now)
+	if result.Accepted || result.Reason == "" {
+		t.Fatal("rejection not recorded")
+	}
+}
