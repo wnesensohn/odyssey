@@ -1,4 +1,5 @@
 -module(odyssey_gateway).
+-export([admit_worker/2]).
 -export([start/2, stop/1]).
 
 -spec start(inet:port_number(), fun((map()) -> binary())) ->
@@ -74,3 +75,11 @@ process_frames(Socket, Handler, [Frame | Tail]) ->
         _ ->
             error
     end.
+
+admit_worker(Active, Limit) when is_integer(Active), Active >= 0, is_integer(Limit), Limit > 0 ->
+    case Active < Limit of
+        true -> accept;
+        false -> backpressure
+    end;
+admit_worker(_, _) ->
+    {error, invalid_capacity}.

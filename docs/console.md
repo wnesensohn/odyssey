@@ -71,3 +71,20 @@ Report journal gaps to observers instead of silently hiding dropped entries.
 All timestamps are UTC, and operators are identified by their controller session.
 Rejected requests do not authorize a flight command. Queue limits are independent
 of display polling intervals.
+
+## Command audit records
+
+Record accepted/rejected command identities and validation outcomes.
+
+`console/internal/commands` exposes `AuditOutcome` to console adapters.
+All timestamps are UTC, and operators are identified by their controller session.
+Rejected requests do not authorize a flight command. Queue limits are independent
+of display polling intervals.
+
+## Accessible telemetry controls
+
+Add accessible table controls and stable fragment focus behavior.
+
+The mission console renders the change through local Go templates and HTMX
+fragments. Controller authentication and flight interlocks remain authoritative.
+Labels are escaped by the template engine; no third-party asset request is needed.

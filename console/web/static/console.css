@@ -33,3 +33,6 @@ footer { color: #aac0d7; }
 .quality-badge { padding: .2rem .45rem; border: 1px solid currentColor; border-radius: .25rem; }
 .quality-badge[data-quality="degraded"] { color: #ffbf47; }
 .quality-badge[data-quality="invalid"] { color: #ff7777; }
+
+:focus-visible { outline: 3px solid #7bc8ff; outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto; transition: none !important; } }

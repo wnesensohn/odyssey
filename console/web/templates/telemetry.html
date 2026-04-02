@@ -1,5 +1,5 @@
 {{define "telemetry"}}
-<table class="telemetry-table">
+<table class="telemetry-table" aria-describedby="telemetry-help">
   <caption>Fresh observations from the flight controller</caption>
   <thead><tr><th scope="col">Channel</th><th scope="col">Value</th><th scope="col">Unit</th><th scope="col">Quality</th></tr></thead>
   <tbody>
@@ -10,4 +10,5 @@
     {{end}}
   </tbody>
 </table>
+<p id="telemetry-help">Values retain their engineering units. Quality labels indicate observation validity.</p>
 {{end}}
