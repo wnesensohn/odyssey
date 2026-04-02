@@ -42,3 +42,10 @@ Release entries describe observable interface or operating changes.
 - Report journal gaps to observers instead of silently hiding dropped entries.
 - Classify duplicate and stale sequence numbers in the negotiated window.
 - Detect low inlet pressure during pump startup and latch a clear trip reason.
+
+## 3.5.0
+
+- Limit simultaneous gateway workers and shut them down with their listener.
+- Apply a temperature-dependent charge acceptance envelope.
+- Record accepted/rejected command identities and validation outcomes.
+- Add accessible table controls and stable fragment focus behavior.
