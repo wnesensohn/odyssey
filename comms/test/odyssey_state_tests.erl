@@ -37,3 +37,8 @@ session_lifecycle_test() ->
     odyssey_session:acknowledge(Pid, Sequence),
     ?assertEqual(#{pending => 0, sent => 1}, odyssey_session:status(Pid)),
     gen_server:stop(Pid).
+
+malformed_reservation_returns_error_test() ->
+    W = odyssey_window:new(2, 100),
+    ?assertMatch({error, _}, odyssey_window:reserve(W, 0, <<>>)),
+    ?assertEqual(0, odyssey_window:size(W)).

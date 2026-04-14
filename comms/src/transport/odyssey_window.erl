@@ -8,7 +8,12 @@ new(Capacity, TimeoutMs) when Capacity > 0, Capacity =< 256, TimeoutMs > 0 ->
 
 -spec reserve(map(), non_neg_integer(), binary()) -> {ok, map()} | {error, atom()}.
 reserve(Window, NowMs, Frame) ->
-    #{sequence := Sequence} = element(2, odyssey_frame:decode(Frame)),
+    case odyssey_frame:decode(Frame) of
+        {ok, #{sequence := Sequence}} -> reserve_decoded(Window, NowMs, Sequence, Frame);
+        {error, Reason} -> {error, Reason}
+    end.
+
+reserve_decoded(Window, NowMs, Sequence, Frame) ->
     Pending = maps:get(pending, Window),
     case maps:is_key(Sequence, Pending) orelse map_size(Pending) >= maps:get(capacity, Window) of
         true ->
