@@ -88,3 +88,12 @@ Add accessible table controls and stable fragment focus behavior.
 The mission console renders the change through local Go templates and HTMX
 fragments. Controller authentication and flight interlocks remain authoritative.
 Labels are escaped by the template engine; no third-party asset request is needed.
+
+## Health freshness budget
+
+Classify degraded health separately from missing or stale observations.
+
+`console/internal/health` exposes `ClassifyProbe` to console adapters.
+All timestamps are UTC, and operators are identified by their controller session.
+Rejected requests do not authorize a flight command. Queue limits are independent
+of display polling intervals.
