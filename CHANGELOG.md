@@ -49,3 +49,7 @@ Release entries describe observable interface or operating changes.
 - Apply a temperature-dependent charge acceptance envelope.
 - Record accepted/rejected command identities and validation outcomes.
 - Add accessible table controls and stable fragment focus behavior.
+
+## 3.5.1
+
+- Return an error for malformed retransmission reservations.
