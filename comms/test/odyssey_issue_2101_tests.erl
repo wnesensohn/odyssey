@@ -4,3 +4,9 @@
 nominal_test() ->
     {ok, B} = odyssey_frame:encode(1, 42, <<1, 2>>),
     ?assertMatch({ok, #{payload_bytes := 2}}, odyssey_frame:inspect(B)).
+
+boundary_test() -> ?assertMatch({error, _}, odyssey_frame:inspect(<<>>)).
+
+invalid_test() ->
+    {ok, B} = odyssey_frame:encode(1, 42, <<>>),
+    ?assertMatch({ok, #{payload_bytes := 0}}, odyssey_frame:inspect(B)).
