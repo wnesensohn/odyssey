@@ -1,4 +1,5 @@
 -module(odyssey_frame).
+-export([inspect/1]).
 -export([sequence_class/3]).
 -export([valid_kind/1]).
 -export([encode/3, decode/1, crc16/1, split_stream/1]).
@@ -84,3 +85,13 @@ sequence_class(Previous, Current, Window) when
     end;
 sequence_class(_, _, _) ->
     invalid.
+
+inspect(Bytes) ->
+    case decode(Bytes) of
+        {ok, Frame} ->
+            {ok, (maps:without([payload], Frame))#{
+                payload_bytes => byte_size(maps:get(payload, Frame))
+            }};
+        Error ->
+            Error
+    end.
