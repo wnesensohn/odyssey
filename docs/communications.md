@@ -67,3 +67,11 @@ Expose header/payload diagnostics without accepting invalid checksums.
 `comms/src/transport/odyssey_frame.erl` exposes `inspect/1`. Link times are monotonic
 milliseconds; sequence fields use unsigned network byte order. Rejection is
 reported to the caller and must not be converted into an acknowledged delivery.
+
+## Acknowledgement timeouts
+
+Track acknowledgement latency and cap retransmission jitter.
+
+`comms/src/transport/odyssey_window.erl` exposes `ack_latency/2`. Link times are monotonic
+milliseconds; sequence fields use unsigned network byte order. Rejection is
+reported to the caller and must not be converted into an acknowledged delivery.
