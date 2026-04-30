@@ -46,3 +46,12 @@ Apply a temperature-dependent charge acceptance envelope.
 pressure in kPa, energy in Wh and mission time in milliseconds. Invalid numeric
 inputs fail before the output is applied to an actuator. Callers must handle the
 returned result; an error never authorizes an actuator transition.
+
+## Solar array incidence
+
+Report eclipse and grazing-incidence cases independently of electrical failures.
+
+`flight/src/power/power.rs` exposes `illumination_state`. Values use SI units, except
+pressure in kPa, energy in Wh and mission time in milliseconds. Invalid numeric
+inputs fail before the output is applied to an actuator. Callers must handle the
+returned result; an error never authorizes an actuator transition.
