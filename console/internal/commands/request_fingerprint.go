@@ -33,3 +33,34 @@ func NewRequestMemo(capacity int) (*RequestMemo, error) {
 	}
 	return &RequestMemo{entries: make(map[string]memoEntry), capacity: capacity}, nil
 }
+func (m *RequestMemo) Submit(key string, command Command, service *Service, now time.Time) (Command, error) {
+	if key == "" {
+		return Command{}, errors.New("idempotency key required")
+	}
+	fingerprint, err := RequestFingerprint(command)
+	if err != nil {
+		return Command{}, err
+	}
+	m.mu.Lock()
+	defer m.mu.Unlock()
+	for key, entry := range m.entries {
+		if !entry.expires.After(now) {
+			delete(m.entries, key)
+		}
+	}
+	if entry, ok := m.entries[key]; ok {
+		if entry.fingerprint != fingerprint {
+			return Command{}, errors.New("key reused with another command")
+		}
+		return entry.result, nil
+	}
+	if len(m.entries) >= m.capacity {
+		return Command{}, errors.New("memo capacity exhausted")
+	}
+	result, err := service.Submit(command, now)
+	if err != nil {
+		return Command{}, err
+	}
+	m.entries[key] = memoEntry{fingerprint: fingerprint, result: result, expires: command.Expires}
+	return result, nil
+}
