@@ -97,3 +97,12 @@ Classify degraded health separately from missing or stale observations.
 All timestamps are UTC, and operators are identified by their controller session.
 Rejected requests do not authorize a flight command. Queue limits are independent
 of display polling intervals.
+
+## Idempotent command requests
+
+Return the prior result for a valid duplicate operator request.
+
+`console/internal/commands` exposes `RequestFingerprint` to console adapters.
+All timestamps are UTC, and operators are identified by their controller session.
+Rejected requests do not authorize a flight command. Queue limits are independent
+of display polling intervals.
