@@ -106,3 +106,11 @@ Return the prior result for a valid duplicate operator request.
 All timestamps are UTC, and operators are identified by their controller session.
 Rejected requests do not authorize a flight command. Queue limits are independent
 of display polling intervals.
+
+## Mission phase status
+
+Display phase transitions and their unmet prerequisite reasons.
+
+The mission console renders the change through local Go templates and HTMX
+fragments. Controller authentication and flight interlocks remain authoritative.
+Labels are escaped by the template engine; no third-party asset request is needed.
