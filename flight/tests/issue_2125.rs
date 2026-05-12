@@ -15,3 +15,8 @@ fn review_fault(acknowledged: bool, last_seen_ms: u64) -> Fault {
 fn nominal_behavior() {
     assert!(clearance_permitted(&review_fault(true, 100), 200, 100));
 }
+
+#[test]
+fn boundary_behavior() {
+    assert!(!clearance_permitted(&review_fault(false, 100), 200, 100));
+}
