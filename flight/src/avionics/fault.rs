@@ -60,3 +60,9 @@ impl FaultRegistry {
         self.active.values()
     }
 }
+
+pub fn clearance_permitted(fault: &Fault, now_ms: u64, quiet_period_ms: u64) -> bool {
+    fault.acknowledged
+        && now_ms >= fault.last_seen_ms
+        && now_ms - fault.last_seen_ms >= quiet_period_ms
+}
