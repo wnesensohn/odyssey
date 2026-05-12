@@ -20,3 +20,8 @@ fn nominal_behavior() {
 fn boundary_behavior() {
     assert!(!clearance_permitted(&review_fault(false, 100), 200, 100));
 }
+
+#[test]
+fn invalid_behavior() {
+    assert!(!clearance_permitted(&review_fault(true, 100), 99, 100));
+}
