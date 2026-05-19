@@ -114,3 +114,12 @@ Display phase transitions and their unmet prerequisite reasons.
 The mission console renders the change through local Go templates and HTMX
 fragments. Controller authentication and flight interlocks remain authoritative.
 Labels are escaped by the template engine; no third-party asset request is needed.
+
+## Telemetry rate accounting
+
+Measure sample arrival rates without changing engineering-unit values.
+
+`console/internal/telemetry` exposes `SampleRate` to console adapters.
+All timestamps are UTC, and operators are identified by their controller session.
+Rejected requests do not authorize a flight command. Queue limits are independent
+of display polling intervals.
