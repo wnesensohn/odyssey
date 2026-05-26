@@ -13,7 +13,7 @@ import (
 type Client struct {
 	mu         sync.Mutex
 	connection net.Conn
-	sequence   uint16
+	sequence   uint32
 	timeout    time.Duration
 }
 
