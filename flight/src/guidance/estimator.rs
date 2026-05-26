@@ -55,3 +55,11 @@ impl ScalarEstimator {
         Ok(true)
     }
 }
+
+pub fn innovation_score(residual: f64, variance: f64) -> Result<f64, crate::ControlError> {
+    if !residual.is_finite() {
+        return Err(crate::ControlError::InvalidSample);
+    }
+    crate::finite_in_range(variance, 1e-12, 1e12)?;
+    Ok(residual.abs() / variance.sqrt())
+}

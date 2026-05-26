@@ -27,7 +27,7 @@ handle_call({send, Kind, Payload}, _From, State) ->
                     maps:get(sink, State) ! {downlink, Frame},
                     {reply, {ok, Sequence}, State#{
                         window := Window,
-                        next_sequence := (Sequence + 1) band 16#ffff,
+                        next_sequence := (Sequence + 1) band 16#ffffffff,
                         sent := maps:get(sent, State) + 1
                     }};
                 Error ->

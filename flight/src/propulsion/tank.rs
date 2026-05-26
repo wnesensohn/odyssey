@@ -33,3 +33,14 @@ impl Tank {
         Ok(self.remaining_kg / self.capacity_kg)
     }
 }
+
+pub fn usable_propellant_kg(
+    remaining_kg: f64,
+    reserve_kg: f64,
+    temperature_k: f64,
+) -> Result<f64, crate::ControlError> {
+    crate::finite_in_range(remaining_kg, 0.0, 1e6)?;
+    crate::finite_in_range(reserve_kg, 0.0, remaining_kg)?;
+    crate::finite_in_range(temperature_k, 250.0, 330.0)?;
+    Ok(remaining_kg - reserve_kg)
+}

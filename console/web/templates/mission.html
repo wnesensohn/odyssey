@@ -1,0 +1,7 @@
+{{define "mission"}}
+<section id="mission" aria-labelledby="mission-title">
+  <h2 id="mission-title">Mission readiness</h2>
+  <p role="status">{{if .Pending}}{{.Pending}} commands await flight acknowledgement.{{else}}No commands are awaiting acknowledgement.{{end}}</p>
+  <p>Flight interlocks remain authoritative for every phase transition.</p>
+</section>
+{{end}}

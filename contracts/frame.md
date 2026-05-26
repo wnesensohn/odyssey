@@ -21,3 +21,11 @@ match the outstanding sequence. Duplicate reservations cannot replace a frame.
 CRC uses polynomial 0x1021, initial state 0xffff, no reflection and no final XOR.
 The ASCII vector `123456789` has checksum 0x29b1. Rust, Erlang and Go must agree.
 Changes to integer widths or mandatory fields require a new wire version.
+
+## Wire version 4
+
+Version 4 widens the sequence field to an unsigned 32-bit network-order integer.
+The payload length starts at byte 8, the payload at byte 10, and the frame occupies
+12 bytes plus its payload. Version 3 peers must be upgraded before enabling this
+format; the codecs reject older headers rather than guessing a layout. Sequence
+comparisons use modular 32-bit arithmetic with a receive window below 2^31.

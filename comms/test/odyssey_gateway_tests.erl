@@ -7,7 +7,7 @@ tcp_gateway_round_trip_test() ->
         {ok, Socket} = gen_tcp:connect({127, 0, 0, 1}, Port, [binary, {active, false}], 1000),
         {ok, Frame} = odyssey_frame:encode(1, 42, <<"nominal">>),
         ok = gen_tcp:send(Socket, Frame),
-        {ok, Bytes} = gen_tcp:recv(Socket, 17, 1000),
+        {ok, Bytes} = gen_tcp:recv(Socket, byte_size(Frame), 1000),
         ?assertEqual(
             {ok, #{kind => 2, sequence => 42, payload => <<"nominal">>}},
             odyssey_frame:decode(Bytes)

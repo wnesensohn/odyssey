@@ -1,4 +1,5 @@
 -module(odyssey_window).
+-export([ack_latency/2]).
 -export([retry_budget/2]).
 -export([new/2, reserve/3, acknowledge/2, due/2, size/1]).
 
@@ -63,3 +64,8 @@ retry_budget(Retries, Maximum) when
     end;
 retry_budget(_, _) ->
     {error, invalid_retry_budget}.
+
+ack_latency(SentMs, AckMs) when is_integer(SentMs), is_integer(AckMs), AckMs >= SentMs ->
+    {ok, AckMs - SentMs};
+ack_latency(_, _) ->
+    {error, time_reversed}.

@@ -33,3 +33,10 @@ impl Watchdog {
         false
     }
 }
+
+pub fn recovery_quorum(healthy: &[bool], minimum: usize) -> Result<bool, crate::ControlError> {
+    if minimum == 0 || minimum > healthy.len() {
+        return Err(crate::ControlError::OutOfRange);
+    }
+    Ok(healthy.iter().filter(|&&value| value).count() >= minimum)
+}

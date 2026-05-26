@@ -37,3 +37,21 @@ Report valid propagation intervals and reject nonfinite derived state.
 pressure in kPa, energy in Wh and mission time in milliseconds. Invalid numeric
 inputs fail before the output is applied to an actuator. Callers must handle the
 returned result; an error never authorizes an actuator transition.
+
+## Panel rate feedforward
+
+Plan panel slew with bounded rate and acceleration feedforward.
+
+`flight/src/guidance/shaping.rs` exposes `stopping_distance_rad`. Values use SI units, except
+pressure in kPa, energy in Wh and mission time in milliseconds. Invalid numeric
+inputs fail before the output is applied to an actuator. Callers must handle the
+returned result; an error never authorizes an actuator transition.
+
+## Navigation innovation gate
+
+Bound accepted estimator innovations and report rejection statistics.
+
+`flight/src/guidance/estimator.rs` exposes `innovation_score`. Values use SI units, except
+pressure in kPa, energy in Wh and mission time in milliseconds. Invalid numeric
+inputs fail before the output is applied to an actuator. Callers must handle the
+returned result; an error never authorizes an actuator transition.

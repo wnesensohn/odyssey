@@ -59,3 +59,27 @@ Limit simultaneous gateway workers and shut them down with their listener.
 `comms/src/transport/odyssey_gateway.erl` exposes `admit_worker/2`. Link times are monotonic
 milliseconds; sequence fields use unsigned network byte order. Rejection is
 reported to the caller and must not be converted into an acknowledged delivery.
+
+## Wire payload inspection
+
+Expose header/payload diagnostics without accepting invalid checksums.
+
+`comms/src/transport/odyssey_frame.erl` exposes `inspect/1`. Link times are monotonic
+milliseconds; sequence fields use unsigned network byte order. Rejection is
+reported to the caller and must not be converted into an acknowledged delivery.
+
+## Acknowledgement timeouts
+
+Track acknowledgement latency and cap retransmission jitter.
+
+`comms/src/transport/odyssey_window.erl` exposes `ack_latency/2`. Link times are monotonic
+milliseconds; sequence fields use unsigned network byte order. Rejection is
+reported to the caller and must not be converted into an acknowledged delivery.
+
+## Wire envelope version four
+
+Widen frame sequence numbers to 32 bits and document the incompatible envelope.
+
+The mission console renders the change through local Go templates and HTMX
+fragments. Controller authentication and flight interlocks remain authoritative.
+Labels are escaped by the template engine; no third-party asset request is needed.

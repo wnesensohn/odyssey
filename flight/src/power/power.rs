@@ -52,3 +52,19 @@ pub fn unsupplied_loads(available_w: f64, loads: &[Load]) -> Result<Vec<u16>, cr
         .map(|load| load.id)
         .collect())
 }
+
+pub fn illumination_state(
+    incidence_rad: f64,
+    eclipse: bool,
+) -> Result<&'static str, crate::ControlError> {
+    crate::finite_in_range(incidence_rad, -std::f64::consts::PI, std::f64::consts::PI)?;
+    Ok(if eclipse {
+        "eclipse"
+    } else if incidence_rad.cos() <= 0.0 {
+        "back-facing"
+    } else if incidence_rad.cos() < 0.1 {
+        "grazing"
+    } else {
+        "illuminated"
+    })
+}

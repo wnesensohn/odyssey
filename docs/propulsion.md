@@ -46,3 +46,12 @@ Detect low inlet pressure during pump startup and latch a clear trip reason.
 pressure in kPa, energy in Wh and mission time in milliseconds. Invalid numeric
 inputs fail before the output is applied to an actuator. Callers must handle the
 returned result; an error never authorizes an actuator transition.
+
+## Propellant reserve estimate
+
+Estimate usable propellant after reserve and temperature constraints.
+
+`flight/src/propulsion/tank.rs` exposes `usable_propellant_kg`. Values use SI units, except
+pressure in kPa, energy in Wh and mission time in milliseconds. Invalid numeric
+inputs fail before the output is applied to an actuator. Callers must handle the
+returned result; an error never authorizes an actuator transition.

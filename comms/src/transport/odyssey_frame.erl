@@ -1,28 +1,29 @@
 -module(odyssey_frame).
+-export([inspect/1]).
 -export([sequence_class/3]).
 -export([valid_kind/1]).
 -export([encode/3, decode/1, crc16/1, split_stream/1]).
 
 -define(MAX_PAYLOAD, 1024).
 
--spec encode(0..255, 0..65535, binary()) -> {ok, binary()} | {error, atom()}.
+-spec encode(0..255, 0..4294967295, binary()) -> {ok, binary()} | {error, atom()}.
 encode(Kind, Sequence, Payload) when
     is_integer(Kind),
     Kind >= 1,
     Kind =< 3,
     is_integer(Sequence),
     Sequence >= 0,
-    Sequence =< 65535,
+    Sequence =< 4294967295,
     is_binary(Payload),
     byte_size(Payload) =< ?MAX_PAYLOAD
 ->
-    Header = <<"OD", 3, Kind, Sequence:16/big, (byte_size(Payload)):16/big, Payload/binary>>,
+    Header = <<"OD", 4, Kind, Sequence:32/big, (byte_size(Payload)):16/big, Payload/binary>>,
     {ok, <<Header/binary, (crc16(Header)):16/big>>};
 encode(_, _, _) ->
     {error, invalid_frame}.
 
 -spec decode(binary()) -> {ok, map()} | {error, atom()}.
-decode(<<"OD", 3, Kind, Sequence:16/big, Length:16/big, Rest/binary>> = Frame) when
+decode(<<"OD", 4, Kind, Sequence:32/big, Length:16/big, Rest/binary>> = Frame) when
     Kind >= 1, Kind =< 3, Length =< ?MAX_PAYLOAD, byte_size(Rest) =:= Length + 2
 ->
     <<Payload:Length/binary, Expected:16/big>> = Rest,
@@ -55,12 +56,12 @@ crc_bits(Crc, Count) ->
 -spec split_stream(binary()) -> {ok, [binary()], binary()} | {error, atom()}.
 split_stream(Bytes) -> split_stream(Bytes, []).
 
-split_stream(Bytes, Acc) when byte_size(Bytes) < 8 ->
+split_stream(Bytes, Acc) when byte_size(Bytes) < 10 ->
     {ok, lists:reverse(Acc), Bytes};
-split_stream(<<"OD", 3, _Kind, _Sequence:16, Length:16, _/binary>> = Bytes, Acc) when
+split_stream(<<"OD", 4, _Kind, _Sequence:32, Length:16, _/binary>> = Bytes, Acc) when
     Length =< ?MAX_PAYLOAD
 ->
-    Size = Length + 10,
+    Size = Length + 12,
     case byte_size(Bytes) >= Size of
         true ->
             <<Frame:Size/binary, Tail/binary>> = Bytes,
@@ -74,9 +75,9 @@ split_stream(_, _) ->
 valid_kind(Kind) -> Kind =:= 1 orelse Kind =:= 2 orelse Kind =:= 3.
 
 sequence_class(Previous, Current, Window) when
-    is_integer(Previous), is_integer(Current), is_integer(Window), Window > 0, Window < 32768
+    is_integer(Previous), is_integer(Current), is_integer(Window), Window > 0, Window < 2147483648
 ->
-    Delta = (Current - Previous) band 16#ffff,
+    Delta = (Current - Previous) band 16#ffffffff,
     if
         Delta =:= 0 -> duplicate;
         Delta =< Window -> next;
@@ -84,3 +85,13 @@ sequence_class(Previous, Current, Window) when
     end;
 sequence_class(_, _, _) ->
     invalid.
+
+inspect(Bytes) ->
+    case decode(Bytes) of
+        {ok, Frame} ->
+            {ok, (maps:without([payload], Frame))#{
+                payload_bytes => byte_size(maps:get(payload, Frame))
+            }};
+        Error ->
+            Error
+    end.

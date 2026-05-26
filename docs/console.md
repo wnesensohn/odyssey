@@ -88,3 +88,38 @@ Add accessible table controls and stable fragment focus behavior.
 The mission console renders the change through local Go templates and HTMX
 fragments. Controller authentication and flight interlocks remain authoritative.
 Labels are escaped by the template engine; no third-party asset request is needed.
+
+## Health freshness budget
+
+Classify degraded health separately from missing or stale observations.
+
+`console/internal/health` exposes `ClassifyProbe` to console adapters.
+All timestamps are UTC, and operators are identified by their controller session.
+Rejected requests do not authorize a flight command. Queue limits are independent
+of display polling intervals.
+
+## Idempotent command requests
+
+Return the prior result for a valid duplicate operator request.
+
+`console/internal/commands` exposes `RequestFingerprint` to console adapters.
+All timestamps are UTC, and operators are identified by their controller session.
+Rejected requests do not authorize a flight command. Queue limits are independent
+of display polling intervals.
+
+## Mission phase status
+
+Display phase transitions and their unmet prerequisite reasons.
+
+The mission console renders the change through local Go templates and HTMX
+fragments. Controller authentication and flight interlocks remain authoritative.
+Labels are escaped by the template engine; no third-party asset request is needed.
+
+## Telemetry rate accounting
+
+Measure sample arrival rates without changing engineering-unit values.
+
+`console/internal/telemetry` exposes `SampleRate` to console adapters.
+All timestamps are UTC, and operators are identified by their controller session.
+Rejected requests do not authorize a flight command. Queue limits are independent
+of display polling intervals.

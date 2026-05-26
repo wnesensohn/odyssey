@@ -51,3 +51,12 @@ impl PanelController {
         Ok(self.angle_rad)
     }
 }
+
+pub fn stopping_distance_rad(
+    rate_rps: f64,
+    acceleration_rps2: f64,
+) -> Result<f64, crate::ControlError> {
+    crate::finite_in_range(rate_rps, -0.2, 0.2)?;
+    crate::finite_in_range(acceleration_rps2, 0.001, 0.1)?;
+    Ok(rate_rps * rate_rps / (2.0 * acceleration_rps2))
+}
