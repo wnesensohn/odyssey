@@ -53,3 +53,10 @@ Release entries describe observable interface or operating changes.
 ## 3.5.1
 
 - Return an error for malformed retransmission reservations.
+
+## 4.0.0
+
+- Preserve fault history when an operator clears an active condition.
+- Bound accepted estimator innovations and report rejection statistics.
+- Measure sample arrival rates without changing engineering-unit values.
+- Widen frame sequence numbers to 32 bits and document the incompatible envelope.
