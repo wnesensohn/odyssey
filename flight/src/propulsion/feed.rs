@@ -154,3 +154,13 @@ impl Default for FeedSystem {
         Self::new()
     }
 }
+
+pub fn purge_complete(
+    pressure_kpa: f64,
+    temperature_k: f64,
+    elapsed_ms: u64,
+) -> Result<bool, crate::ControlError> {
+    crate::finite_in_range(pressure_kpa, 0.0, 1500.0)?;
+    crate::finite_in_range(temperature_k, 0.0, 1800.0)?;
+    Ok(pressure_kpa <= 25.0 && temperature_k <= 450.0 && elapsed_ms >= 1000)
+}
