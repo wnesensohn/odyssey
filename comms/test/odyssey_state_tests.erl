@@ -35,7 +35,7 @@ session_lifecycle_test() ->
     after 1000 -> ?assert(false)
     end,
     odyssey_session:acknowledge(Pid, Sequence),
-    ?assertEqual(#{pending => 0, sent => 1}, odyssey_session:status(Pid)),
+    ?assertEqual(#{pending => 0, pressure => ready, sent => 1}, odyssey_session:status(Pid)),
     gen_server:stop(Pid).
 
 malformed_reservation_returns_error_test() ->
