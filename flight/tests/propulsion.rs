@@ -111,3 +111,16 @@ fn tank_consumption_cannot_create_negative_inventory() {
     assert!(tank.consume(10.0, 10.0).is_err());
     assert_eq!(tank.remaining_kg, 30.0);
 }
+
+#[test]
+fn empty_hardware_capacity_is_not_a_valid_tank() {
+    let mut tank = odyssey_flight::propulsion::tank::Tank {
+        capacity_kg: 0.0,
+        remaining_kg: 0.0,
+        temperature_k: 290.0,
+        ullage_m3: 1.0,
+        pressurant_mol: 1.0,
+    };
+    assert!(tank.consume(0.0, 1.0).is_err());
+    assert_eq!(tank.remaining_kg, 0.0);
+}
