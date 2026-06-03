@@ -60,3 +60,7 @@ Release entries describe observable interface or operating changes.
 - Bound accepted estimator innovations and report rejection statistics.
 - Measure sample arrival rates without changing engineering-unit values.
 - Widen frame sequence numbers to 32 bits and document the incompatible envelope.
+
+## 4.0.1
+
+- Validate tank capacity before consuming propellant.
