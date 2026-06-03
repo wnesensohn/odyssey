@@ -68,3 +68,12 @@ pub fn illumination_state(
         "illuminated"
     })
 }
+
+pub fn restore_order(
+    loads: &[Load],
+    available_w: f64,
+    reserve_w: f64,
+) -> Result<Vec<u16>, crate::ControlError> {
+    crate::finite_in_range(reserve_w, 0.0, available_w)?;
+    allocate_power(available_w - reserve_w, loads)
+}
