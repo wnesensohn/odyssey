@@ -20,6 +20,7 @@ impl Tank {
         finite_in_range(mass_flow_kgps, 0.0, 100.0)?;
         finite_in_range(dt_s, 0.0, 10.0)?;
         finite_in_range(self.remaining_kg, 0.0, self.capacity_kg)?;
+        finite_in_range(self.capacity_kg, 0.01, 1e6)?;
         let required = mass_flow_kgps * dt_s;
         if required > self.remaining_kg {
             return Err(ControlError::InterlockOpen);
