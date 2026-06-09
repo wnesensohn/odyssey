@@ -20,3 +20,11 @@ func TestIssue2168Boundary(t *testing.T) {
 		t.Fatal("rejected severity")
 	}
 }
+
+func TestIssue2168Invalid(t *testing.T) {
+	now := time.Unix(100, 0)
+	_ = now
+	if CommandOutcome(1, "operator", false, now).Area != "commands" {
+		t.Fatal("wrong event area")
+	}
+}
