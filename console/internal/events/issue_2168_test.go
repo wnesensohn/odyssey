@@ -12,3 +12,11 @@ func TestIssue2168Nominal(t *testing.T) {
 		t.Fatal("accepted outcome")
 	}
 }
+
+func TestIssue2168Boundary(t *testing.T) {
+	now := time.Unix(100, 0)
+	_ = now
+	if CommandOutcome(1, "operator", false, now).Severity != "warning" {
+		t.Fatal("rejected severity")
+	}
+}
