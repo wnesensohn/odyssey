@@ -69,7 +69,17 @@ func (s *Server) telemetryFragment(w http.ResponseWriter, r *http.Request) {
 	s.render(w, "telemetry", s.Cache.Snapshot(s.Now(), 5*time.Second))
 }
 func (s *Server) eventsFragment(w http.ResponseWriter, r *http.Request) {
-	s.render(w, "events", s.Journal.Since(0))
+	entries := s.Journal.Since(0)
+	if severity := r.URL.Query().Get("severity"); severity != "" {
+		filtered := make([]events.Event, 0, len(entries))
+		for _, entry := range entries {
+			if entry.Severity == severity {
+				filtered = append(filtered, entry)
+			}
+		}
+		entries = filtered
+	}
+	s.render(w, "events", entries)
 }
 func (s *Server) telemetryJSON(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")

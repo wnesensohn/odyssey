@@ -30,7 +30,11 @@
     {{template "thermal" .}}
     <section id="events" aria-labelledby="events-title">
       <h2 id="events-title">Event journal</h2>
-      <div hx-get="/fragments/events" hx-trigger="every 3s" hx-swap="innerHTML">
+      <form hx-get="/fragments/events" hx-target="#event-entries" hx-trigger="change">
+        <label for="event-severity">Severity</label>
+        <select id="event-severity" name="severity"><option value="">All events</option><option value="warning">Warnings</option><option value="info">Information</option></select>
+      </form>
+      <div id="event-entries" hx-get="/fragments/events" hx-trigger="every 3s" hx-swap="innerHTML">
         {{template "events" .Events}}
       </div>
     </section>

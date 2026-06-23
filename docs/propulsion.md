@@ -55,3 +55,12 @@ Estimate usable propellant after reserve and temperature constraints.
 pressure in kPa, energy in Wh and mission time in milliseconds. Invalid numeric
 inputs fail before the output is applied to an actuator. Callers must handle the
 returned result; an error never authorizes an actuator transition.
+
+## Engine shutdown purge
+
+Track purge completion before returning the feed system to isolated state.
+
+`flight/src/propulsion/feed.rs` exposes `purge_complete`. Values use SI units, except
+pressure in kPa, energy in Wh and mission time in milliseconds. Invalid numeric
+inputs fail before the output is applied to an actuator. Callers must handle the
+returned result; an error never authorizes an actuator transition.

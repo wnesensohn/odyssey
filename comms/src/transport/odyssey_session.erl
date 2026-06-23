@@ -1,4 +1,5 @@
 -module(odyssey_session).
+-export([pending_state/2]).
 -behaviour(gen_server).
 -export([start_link/1, send/3, acknowledge/2, status/1]).
 -export([init/1, handle_call/3, handle_cast/2, handle_info/2, terminate/2, code_change/3]).
@@ -38,7 +39,11 @@ handle_call({send, Kind, Payload}, _From, State) ->
     end;
 handle_call(status, _From, State) ->
     {reply,
-        #{pending => odyssey_window:size(maps:get(window, State)), sent => maps:get(sent, State)},
+        #{
+            pending => odyssey_window:size(maps:get(window, State)),
+            pressure => pending_state(odyssey_window:size(maps:get(window, State)), 16),
+            sent => maps:get(sent, State)
+        },
         State};
 handle_call(_, _From, State) ->
     {reply, {error, unsupported}, State}.
@@ -62,3 +67,14 @@ terminate(_, State) ->
     ok.
 code_change(_, State, _) -> {ok, State}.
 now_ms() -> erlang:monotonic_time(millisecond).
+
+pending_state(Pending, Capacity) when
+    is_integer(Pending), Pending >= 0, is_integer(Capacity), Capacity > 0
+->
+    if
+        Pending >= Capacity -> full;
+        Pending * 4 >= Capacity * 3 -> pressured;
+        true -> ready
+    end;
+pending_state(_, _) ->
+    invalid.

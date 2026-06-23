@@ -55,3 +55,12 @@ Report eclipse and grazing-incidence cases independently of electrical failures.
 pressure in kPa, energy in Wh and mission time in milliseconds. Invalid numeric
 inputs fail before the output is applied to an actuator. Callers must handle the
 returned result; an error never authorizes an actuator transition.
+
+## Power restore order
+
+Restore shed circuits in explicit priority order with reserve checks.
+
+`flight/src/power/power.rs` exposes `restore_order`. Values use SI units, except
+pressure in kPa, energy in Wh and mission time in milliseconds. Invalid numeric
+inputs fail before the output is applied to an actuator. Callers must handle the
+returned result; an error never authorizes an actuator transition.
