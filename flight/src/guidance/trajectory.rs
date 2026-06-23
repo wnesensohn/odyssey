@@ -36,3 +36,13 @@ pub fn propellant_required(
     finite_in_range(specific_impulse_s, 10.0, 5000.0)?;
     Ok(dry_mass_kg * ((delta_v_mps / (specific_impulse_s * 9.80665)).exp() - 1.0))
 }
+
+pub fn coast_checkpoints(coast_s: f64, segments: usize) -> Result<Vec<f64>, crate::ControlError> {
+    crate::finite_in_range(coast_s, 0.1, 1e7)?;
+    if segments == 0 || segments > 1000 {
+        return Err(crate::ControlError::OutOfRange);
+    }
+    Ok((0..=segments)
+        .map(|index| coast_s * index as f64 / segments as f64)
+        .collect())
+}
