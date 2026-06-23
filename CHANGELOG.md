@@ -64,3 +64,10 @@ Release entries describe observable interface or operating changes.
 ## 4.0.1
 
 - Validate tank capacity before consuming propellant.
+
+## 4.1.0
+
+- Publish command execution outcomes through a bounded event stream.
+- Filter the event journal without dropping severity or time context.
+- Detect stalled cooldown using bounded sample windows.
+- Compute progress and checkpoint times for planned coast intervals.
