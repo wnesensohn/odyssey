@@ -33,3 +33,13 @@ func TestSessionCreationRejectsUnsupportedRoles(t *testing.T) {
 		t.Fatal("accepted unsupported role")
 	}
 }
+
+func TestSessionCreationRejectsUnsetClock(t *testing.T) {
+	store, _ := NewStore(time.Minute)
+	if _, err := store.Create("operator", Controller, time.Time{}); err == nil {
+		t.Fatal("unset clock accepted")
+	}
+	if len(store.entries) != 0 {
+		t.Fatal("rejected session stored")
+	}
+}
