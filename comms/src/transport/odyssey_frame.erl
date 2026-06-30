@@ -1,4 +1,5 @@
 -module(odyssey_frame).
+-export([capabilities/1]).
 -export([inspect/1]).
 -export([sequence_class/3]).
 -export([valid_kind/1]).
@@ -95,3 +96,8 @@ inspect(Bytes) ->
         Error ->
             Error
     end.
+
+capabilities(Version) when Version =:= 3; Version =:= 4 ->
+    #{wire_version => Version, max_payload => 1024, checksum => ccitt_false};
+capabilities(_) ->
+    {error, unsupported_version}.
