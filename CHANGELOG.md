@@ -71,3 +71,7 @@ Release entries describe observable interface or operating changes.
 - Filter the event journal without dropping severity or time context.
 - Detect stalled cooldown using bounded sample windows.
 - Compute progress and checkpoint times for planned coast intervals.
+
+## 4.1.1
+
+- Reject operator sessions without a creation timestamp.
