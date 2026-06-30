@@ -35,7 +35,7 @@ func NewStore(lifetime time.Duration) (*Store, error) {
 }
 
 func (s *Store) Create(operator string, role Role, now time.Time) (Session, error) {
-	if operator == "" || (role != Observer && role != Controller) {
+	if now.IsZero() || operator == "" || (role != Observer && role != Controller) {
 		return Session{}, errors.New("invalid operator identity")
 	}
 	random := make([]byte, 32)
