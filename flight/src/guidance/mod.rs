@@ -4,3 +4,5 @@ pub mod filter;
 pub mod navigation;
 pub mod shaping;
 pub mod trajectory;
+
+pub mod statistics;
