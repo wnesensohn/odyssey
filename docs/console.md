@@ -149,3 +149,8 @@ Report dropped sample counts and retained-history bounds.
 All timestamps are UTC, and operators are identified by their controller session.
 Rejected requests do not authorize a flight command. Queue limits are independent
 of display polling intervals.
+
+## Keep command timing policy beside validation
+
+`ValidatedLifetime` lives in `console/internal/commands/service.go`. Existing callers retain the same public
+contract. Regression tests cover its boundary behavior after the move.
