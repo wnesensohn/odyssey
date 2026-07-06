@@ -29,3 +29,11 @@ func TestIssue2016Invalid(t *testing.T) {
 		t.Fatal("accepted reversed time")
 	}
 }
+
+func TestLifetimeEqualityDoesNotDependOnPackageLayout(t *testing.T) {
+	now := time.Unix(100, 0)
+	_, err := ValidatedLifetime(now, now.Add(time.Minute), now)
+	if err != nil {
+		t.Fatal(err)
+	}
+}
