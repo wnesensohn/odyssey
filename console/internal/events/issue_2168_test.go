@@ -28,3 +28,11 @@ func TestIssue2168Invalid(t *testing.T) {
 		t.Fatal("wrong event area")
 	}
 }
+
+func TestOutcomeJournalAssignsItsOwnSequence(t *testing.T) {
+	j, _ := NewJournal(3)
+	event, err := j.Append(CommandOutcome(99, "operator", true, time.Unix(100, 0)))
+	if err != nil || event.ID != 1 {
+		t.Fatal(event, err)
+	}
+}
