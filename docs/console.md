@@ -154,3 +154,8 @@ of display polling intervals.
 
 `ValidatedLifetime` lives in `console/internal/commands/service.go`. Existing callers retain the same public
 contract. Regression tests cover its boundary behavior after the move.
+
+## Group command outcomes with journal events
+
+`CommandOutcome` lives in `console/internal/events/journal.go`. Existing callers retain the same public
+contract. Regression tests cover its boundary behavior after the move.
