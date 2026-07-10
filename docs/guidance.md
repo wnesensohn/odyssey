@@ -69,3 +69,8 @@ returned result; an error never authorizes an actuator transition.
 
 `median` lives in `flight/src/guidance/statistics.rs`. Existing callers retain the same public
 contract. Regression tests cover its boundary behavior after the move.
+
+## Place filter updates before constructor bookkeeping
+
+`update` lives in `flight/src/guidance/filter.rs`. Existing callers retain the same public
+contract. Regression tests cover its boundary behavior after the move.
