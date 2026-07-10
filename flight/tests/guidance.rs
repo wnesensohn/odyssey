@@ -144,3 +144,11 @@ fn orbital_transfer_and_mass_budget_have_physical_signs() {
     assert_eq!(propellant_required(1000.0, 0.0, 300.0).unwrap(), 0.0);
     assert!(propellant_required(1000.0, 100.0, 300.0).unwrap() > 0.0);
 }
+
+#[test]
+fn reset_filter_discards_previous_samples() {
+    let mut filter = odyssey_flight::filter::LowPass::new(1.0).unwrap();
+    filter.update(100.0, 1.0).unwrap();
+    filter.reset();
+    assert_eq!(filter.update(2.0, 1.0).unwrap(), 2.0);
+}
