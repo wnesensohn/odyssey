@@ -38,3 +38,16 @@ func TestIssue2188Invalid(t *testing.T) {
 		t.Fatal("capacity ignored")
 	}
 }
+
+func TestLatestSurvivesChannelTrimming(t *testing.T) {
+	now := time.Unix(100, 0)
+	cache, _ := NewCache(3)
+	for i := 0; i < 3; i++ {
+		_ = cache.Append(Sample{Channel: "pump", Unit: "kPa", Value: float64(i), Time: now.Add(time.Duration(i) * time.Second)})
+	}
+	_ = cache.RetainChannel("pump", 1)
+	value, ok := cache.Latest("pump")
+	if !ok || value.Value != 2 {
+		t.Fatal(value, ok)
+	}
+}
