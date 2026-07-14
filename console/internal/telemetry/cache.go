@@ -46,16 +46,6 @@ func (c *Cache) Append(sample Sample) error {
 	return nil
 }
 
-func (c *Cache) Latest(channel string) (Sample, bool) {
-	c.mu.RLock()
-	defer c.mu.RUnlock()
-	history := c.entries[channel]
-	if len(history) == 0 {
-		return Sample{}, false
-	}
-	return history[len(history)-1], true
-}
-
 func (c *Cache) Snapshot(now time.Time, maximumAge time.Duration) []Sample {
 	c.mu.RLock()
 	defer c.mu.RUnlock()
@@ -74,4 +64,14 @@ func (c *Cache) History(channel string) []Sample {
 	c.mu.RLock()
 	defer c.mu.RUnlock()
 	return append([]Sample(nil), c.entries[channel]...)
+}
+
+func (c *Cache) Latest(channel string) (Sample, bool) {
+	c.mu.RLock()
+	defer c.mu.RUnlock()
+	history := c.entries[channel]
+	if len(history) == 0 {
+		return Sample{}, false
+	}
+	return history[len(history)-1], true
 }

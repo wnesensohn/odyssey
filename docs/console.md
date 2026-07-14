@@ -159,3 +159,8 @@ contract. Regression tests cover its boundary behavior after the move.
 
 `CommandOutcome` lives in `console/internal/events/journal.go`. Existing callers retain the same public
 contract. Regression tests cover its boundary behavior after the move.
+
+## Place latest observations beside history access
+
+`Latest` lives in `console/internal/telemetry/cache.go`. Existing callers retain the same public
+contract. Regression tests cover its boundary behavior after the move.
