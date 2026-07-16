@@ -14,3 +14,10 @@ fn boundary_behavior() {
 fn invalid_behavior() {
     assert!(heater_energy_wh(f64::INFINITY, 1.0, 1.0).is_err());
 }
+
+#[test]
+fn split_heater_intervals_conserve_energy() {
+    let a = heater_energy_wh(120.0, 30.0, 2.0).unwrap();
+    let b = heater_energy_wh(120.0, 30.0, 2.0).unwrap();
+    assert_eq!(a + b, heater_energy_wh(120.0, 60.0, 2.0).unwrap());
+}

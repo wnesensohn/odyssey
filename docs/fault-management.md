@@ -46,3 +46,8 @@ Detect stalled cooldown using bounded sample windows.
 pressure in kPa, energy in Wh and mission time in milliseconds. Invalid numeric
 inputs fail before the output is applied to an actuator. Callers must handle the
 returned result; an error never authorizes an actuator transition.
+
+## Extract heater energy accounting into a budget module
+
+`heater_energy_wh` lives in `flight/src/thermal/budget.rs`. Existing callers retain the same public
+contract. Regression tests cover its boundary behavior after the move.
