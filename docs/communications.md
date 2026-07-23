@@ -105,3 +105,9 @@ reported to the caller and must not be converted into an acknowledged delivery.
 Cap the retry policy even when callers request an excessive budget. The public interface reports rejected inputs without mutating its
 actuator or queue state. Regression tests cover the normal path and the limiting
 case; operator procedures should handle both outcomes explicitly.
+
+## Wire inspection tool
+
+Expose a command-line decoder for integrated wire qualification. The public interface reports rejected inputs without mutating its
+actuator or queue state. Regression tests cover the normal path and the limiting
+case; operator procedures should handle both outcomes explicitly.
