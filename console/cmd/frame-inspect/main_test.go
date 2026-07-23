@@ -15,3 +15,8 @@ func TestInspectExecutableReadsWideSequence(t *testing.T) {
 		t.Fatal(string(output), err)
 	}
 }
+func TestInspectExecutableRejectsCorruptFrame(t *testing.T) {
+	if exec.Command("go", "run", ".", "0001").Run() == nil {
+		t.Fatal("invalid frame accepted")
+	}
+}
