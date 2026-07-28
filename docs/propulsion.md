@@ -64,3 +64,9 @@ Track purge completion before returning the feed system to isolated state.
 pressure in kPa, energy in Wh and mission time in milliseconds. Invalid numeric
 inputs fail before the output is applied to an actuator. Callers must handle the
 returned result; an error never authorizes an actuator transition.
+
+## Ignition pressure margin
+
+Require a five-kPa feed margin before ignition. The public interface reports rejected inputs without mutating its
+actuator or queue state. Regression tests cover the normal path and the limiting
+case; operator procedures should handle both outcomes explicitly.
