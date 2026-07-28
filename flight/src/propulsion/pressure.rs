@@ -53,5 +53,5 @@ pub fn fresh_pressure_permits_ignition(
     sample.quality == crate::sensor::Quality::Good
         && sample.timestamp_ms <= now_ms
         && now_ms - sample.timestamp_ms <= maximum_age_ms
-        && pressure_permits_ignition(sample.value, minimum_kpa)
+        && pressure_permits_ignition(sample.value, minimum_kpa + 5.0)
 }

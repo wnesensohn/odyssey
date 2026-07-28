@@ -36,3 +36,13 @@ fn invalid_behavior() {
         500
     ));
 }
+
+#[test]
+fn marginal_pressure_does_not_enable_ignition() {
+    assert!(!fresh_pressure_permits_ignition(
+        crate_sample(252.0, 100),
+        200,
+        250.0,
+        500
+    ));
+}
