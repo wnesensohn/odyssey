@@ -10,6 +10,7 @@ func (c *Cache) RetainChannel(channel string, limit int) error {
 	}
 	c.mu.Lock()
 	defer c.mu.Unlock()
+	c.limits[channel] = limit
 	history := c.entries[channel]
 	if len(history) > limit {
 		c.entries[channel] = append([]Sample(nil), history[len(history)-limit:]...)
