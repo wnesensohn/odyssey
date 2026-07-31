@@ -20,13 +20,14 @@ type Cache struct {
 	mu       sync.RWMutex
 	entries  map[string][]Sample
 	capacity int
+	limits   map[string]int
 }
 
 func NewCache(capacity int) (*Cache, error) {
 	if capacity < 1 || capacity > 4096 {
 		return nil, errors.New("invalid telemetry capacity")
 	}
-	return &Cache{entries: make(map[string][]Sample), capacity: capacity}, nil
+	return &Cache{entries: make(map[string][]Sample), capacity: capacity, limits: make(map[string]int)}, nil
 }
 
 func (c *Cache) Append(sample Sample) error {
@@ -39,8 +40,12 @@ func (c *Cache) Append(sample Sample) error {
 	if len(history) > 0 && sample.Time.Before(history[len(history)-1].Time) {
 		return errors.New("telemetry time moved backwards")
 	}
-	if len(history) == c.capacity {
-		history = append([]Sample(nil), history[1:]...)
+	limit := c.capacity
+	if configured, ok := c.limits[sample.Channel]; ok {
+		limit = configured
+	}
+	if len(history) >= limit {
+		history = append([]Sample(nil), history[len(history)-limit+1:]...)
 	}
 	c.entries[sample.Channel] = append(history, sample)
 	return nil
