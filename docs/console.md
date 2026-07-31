@@ -164,3 +164,9 @@ contract. Regression tests cover its boundary behavior after the move.
 
 `Latest` lives in `console/internal/telemetry/cache.go`. Existing callers retain the same public
 contract. Regression tests cover its boundary behavior after the move.
+
+## Persistent channel retention
+
+Preserve channel retention limits across subsequent observations. The public interface reports rejected inputs without mutating its
+actuator or queue state. Regression tests cover the normal path and the limiting
+case; operator procedures should handle both outcomes explicitly.
