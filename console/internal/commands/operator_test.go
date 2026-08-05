@@ -17,3 +17,11 @@ func TestOperatorByteLimit(t *testing.T) {
 		t.Fatal(err)
 	}
 }
+
+func TestOperatorLimitCountsUTF8Bytes(t *testing.T) {
+	now := time.Unix(100, 0)
+	c := Command{Kind: Safe, Operator: strings.Repeat("é", 65), Issued: now, Expires: now.Add(time.Second)}
+	if Validate(c, now) == nil {
+		t.Fatal("byte limit treated as rune count")
+	}
+}
