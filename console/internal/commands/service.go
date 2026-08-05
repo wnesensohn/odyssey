@@ -28,7 +28,7 @@ type Command struct {
 }
 
 func Validate(command Command, now time.Time) error {
-	if command.Operator == "" || command.Issued.IsZero() || command.Issued.After(now) || !command.Expires.After(now) {
+	if command.Operator == "" || len(command.Operator) > 128 || command.Issued.IsZero() || command.Issued.After(now) || !command.Expires.After(now) {
 		return errors.New("command identity or timing is invalid")
 	}
 	if _, err := ValidatedLifetime(command.Issued, command.Expires, now); err != nil {

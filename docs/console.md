@@ -170,3 +170,9 @@ contract. Regression tests cover its boundary behavior after the move.
 Preserve channel retention limits across subsequent observations. The public interface reports rejected inputs without mutating its
 actuator or queue state. Regression tests cover the normal path and the limiting
 case; operator procedures should handle both outcomes explicitly.
+
+## Operator identity bounds
+
+Reject operator identities longer than 128 bytes. The public interface reports rejected inputs without mutating its
+actuator or queue state. Regression tests cover the normal path and the limiting
+case; operator procedures should handle both outcomes explicitly.
