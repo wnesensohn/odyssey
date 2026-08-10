@@ -34,7 +34,7 @@
         <label for="event-severity">Severity</label>
         <select id="event-severity" name="severity"><option value="">All events</option><option value="warning">Warnings</option><option value="info">Information</option></select>
       </form>
-      <div id="event-entries" hx-get="/fragments/events" hx-trigger="every 3s" hx-swap="innerHTML">
+      <div id="event-entries" hx-get="/fragments/events" hx-trigger="every 3s" hx-include="#event-severity" hx-swap="innerHTML">
         {{template "events" .Events}}
       </div>
     </section>
