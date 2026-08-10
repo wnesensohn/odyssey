@@ -176,3 +176,9 @@ case; operator procedures should handle both outcomes explicitly.
 Reject operator identities longer than 128 bytes. The public interface reports rejected inputs without mutating its
 actuator or queue state. Regression tests cover the normal path and the limiting
 case; operator procedures should handle both outcomes explicitly.
+
+## Retained event filter
+
+Retain event severity filters during HTMX polling. The public interface reports rejected inputs without mutating its
+actuator or queue state. Regression tests cover the normal path and the limiting
+case; operator procedures should handle both outcomes explicitly.
