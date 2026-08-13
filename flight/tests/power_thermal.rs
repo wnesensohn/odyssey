@@ -55,3 +55,21 @@ fn heat_balance_has_consistent_direction_and_units() {
     assert_eq!(coolant.heat_removed_w().unwrap(), 40_000.0);
     assert_eq!(coolant.required_flow(40_000.0, 10.0).unwrap(), 1.0);
 }
+
+#[test]
+fn duplicate_load_ids_are_not_an_allocation() {
+    use odyssey_flight::power::{allocate_power, Load, Priority};
+    let load = Load {
+        id: 1,
+        demand_w: 10.0,
+        priority: Priority::Payload,
+    };
+    assert!(allocate_power(100.0, &[load, load]).is_err());
+}
+
+#[test]
+fn empty_allocation_is_valid() {
+    assert!(odyssey_flight::power::allocate_power(100.0, &[])
+        .unwrap()
+        .is_empty());
+}
