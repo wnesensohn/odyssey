@@ -64,3 +64,9 @@ Restore shed circuits in explicit priority order with reserve checks.
 pressure in kPa, energy in Wh and mission time in milliseconds. Invalid numeric
 inputs fail before the output is applied to an actuator. Callers must handle the
 returned result; an error never authorizes an actuator transition.
+
+## Duplicate load identifiers
+
+Reject ambiguous duplicate loads before bus allocation. The public interface reports rejected inputs without mutating its
+actuator or queue state. Regression tests cover the normal path and the limiting
+case; operator procedures should handle both outcomes explicitly.
