@@ -66,3 +66,18 @@ pub fn clearance_permitted(fault: &Fault, now_ms: u64, quiet_period_ms: u64) -> 
         && now_ms >= fault.last_seen_ms
         && now_ms - fault.last_seen_ms >= quiet_period_ms
 }
+
+impl FaultRegistry {
+    pub fn clear_if_quiet(
+        &mut self,
+        code: u16,
+        now_ms: u64,
+        quiet_period_ms: u64,
+    ) -> Option<Fault> {
+        let fault = self.active.get(&code)?;
+        if !clearance_permitted(fault, now_ms, quiet_period_ms) {
+            return None;
+        };
+        self.active.remove(&code)
+    }
+}
