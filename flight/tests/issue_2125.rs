@@ -25,3 +25,24 @@ fn boundary_behavior() {
 fn invalid_behavior() {
     assert!(!clearance_permitted(&review_fault(true, 100), 99, 100));
 }
+
+#[test]
+fn active_fault_requires_acknowledgement_and_quiet_time() {
+    let mut registry = FaultRegistry::default();
+    registry.report(1, Severity::Critical, 100);
+    assert!(registry.clear_if_quiet(1, 200, 100).is_none());
+    registry.acknowledge(1);
+    assert!(registry.clear_if_quiet(1, 199, 100).is_none());
+    assert!(registry.clear_if_quiet(1, 200, 100).is_some());
+    assert!(!registry.safe_mode_required());
+}
+
+#[test]
+fn fault_rereport_resets_quiet_interval() {
+    let mut registry = FaultRegistry::default();
+    registry.report(1, Severity::Critical, 100);
+    registry.acknowledge(1);
+    registry.report(1, Severity::Critical, 180);
+    assert!(registry.clear_if_quiet(1, 200, 100).is_none());
+    assert!(registry.clear_if_quiet(1, 280, 100).is_some());
+}

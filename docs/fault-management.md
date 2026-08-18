@@ -51,3 +51,9 @@ returned result; an error never authorizes an actuator transition.
 
 `heater_energy_wh` lives in `flight/src/thermal/budget.rs`. Existing callers retain the same public
 contract. Regression tests cover its boundary behavior after the move.
+
+## Acknowledged fault clearance
+
+Prevent clearing active faults before their quiet interval. The public interface reports rejected inputs without mutating its
+actuator or queue state. Regression tests cover the normal path and the limiting
+case; operator procedures should handle both outcomes explicitly.
