@@ -52,3 +52,9 @@ fn adaptive_margin_requires_more_than_ten_kpa() {
         500
     ));
 }
+
+#[test]
+fn hot_chamber_requires_additional_feed_pressure() {
+    assert_eq!(required_feed_kpa(250.0, 800.0).unwrap(), 285.0);
+    assert!(required_feed_kpa(250.0, f64::NAN).is_err());
+}
