@@ -36,3 +36,19 @@ fn invalid_behavior() {
         500
     ));
 }
+
+#[test]
+fn adaptive_margin_requires_more_than_ten_kpa() {
+    assert!(!fresh_pressure_permits_ignition(
+        crate_sample(260.0, 100),
+        200,
+        250.0,
+        500
+    ));
+    assert!(fresh_pressure_permits_ignition(
+        crate_sample(270.0, 100),
+        200,
+        250.0,
+        500
+    ));
+}
