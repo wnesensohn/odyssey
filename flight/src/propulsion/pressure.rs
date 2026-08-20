@@ -55,3 +55,9 @@ pub fn fresh_pressure_permits_ignition(
         && now_ms - sample.timestamp_ms <= maximum_age_ms
         && pressure_permits_ignition(sample.value, minimum_kpa + 15.0)
 }
+
+pub fn required_feed_kpa(minimum_kpa: f64, temperature_k: f64) -> Result<f64, ControlError> {
+    finite_in_range(minimum_kpa, 0.0, 1400.0)?;
+    finite_in_range(temperature_k, 250.0, 1800.0)?;
+    Ok(minimum_kpa + 15.0 + ((temperature_k - 300.0) / 25.0).clamp(0.0, 20.0))
+}
