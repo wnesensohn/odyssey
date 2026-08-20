@@ -56,3 +56,21 @@ fn exact_margin_permits_ignition() {
         500
     ));
 }
+
+#[test]
+fn pressure_decay_closes_the_ignition_interlock() {
+    let values = [300.0, 300.0, 260.0, 240.0, 200.0];
+    let mut seen_closed = false;
+    for (index, value) in values.iter().copied().enumerate() {
+        let time = index as u64 * 100;
+        let permitted =
+            fresh_pressure_permits_ignition(crate_sample(value, time), time, 250.0, 500);
+        if !permitted {
+            seen_closed = true;
+        }
+        if seen_closed {
+            assert!(!permitted);
+        }
+    }
+    assert!(seen_closed);
+}
