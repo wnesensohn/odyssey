@@ -75,3 +75,9 @@ Release entries describe observable interface or operating changes.
 ## 4.1.1
 
 - Reject operator sessions without a creation timestamp.
+
+## 4.2.0 (unreleased)
+
+- Preserve per-channel telemetry retention between observations.
+- Require a five-kPa ignition pressure margin.
+- Bound operator identity lengths and retransmission retry budgets.
