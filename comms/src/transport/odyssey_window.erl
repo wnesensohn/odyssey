@@ -1,6 +1,6 @@
 -module(odyssey_window).
 -export([ack_latency/2]).
--export([retry_budget/2]).
+-export([retry_budget/2, retry_delay/3]).
 -export([new/2, reserve/3, acknowledge/2, due/2, size/1]).
 
 -spec new(pos_integer(), pos_integer()) -> map().
@@ -69,3 +69,17 @@ ack_latency(SentMs, AckMs) when is_integer(SentMs), is_integer(AckMs), AckMs >= 
     {ok, AckMs - SentMs};
 ack_latency(_, _) ->
     {error, time_reversed}.
+
+retry_delay(BaseMs, Attempt, JitterMs) when
+    is_integer(BaseMs),
+    BaseMs > 0,
+    is_integer(Attempt),
+    Attempt >= 0,
+    Attempt =< 8,
+    is_integer(JitterMs),
+    JitterMs >= 0,
+    JitterMs =< 100
+->
+    {ok, min(10000, BaseMs * (1 bsl Attempt)) + JitterMs};
+retry_delay(_, _, _) ->
+    {error, invalid_retry_delay}.
