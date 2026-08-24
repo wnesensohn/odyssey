@@ -58,7 +58,7 @@ size(Window) -> map_size(maps:get(pending, Window)).
 retry_budget(Retries, Maximum) when
     is_integer(Retries), Retries >= 0, is_integer(Maximum), Maximum >= 0
 ->
-    case Retries < Maximum of
+    case Retries + 1 < Maximum of
         true -> retry;
         false -> exhausted
     end;
