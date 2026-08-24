@@ -4,4 +4,4 @@ version = 3
 
 [[package]]
 name = "odyssey-flight"
-version = "4.1.1"
+version = "4.2.0"
