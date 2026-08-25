@@ -83,9 +83,3 @@ Widen frame sequence numbers to 32 bits and document the incompatible envelope.
 The mission console renders the change through local Go templates and HTMX
 fragments. Controller authentication and flight interlocks remain authoritative.
 Labels are escaped by the template engine; no third-party asset request is needed.
-
-## Retry window guard
-
-The `retry-window-guard` change remains under review. Regression tests cover its boundary
-behavior. Before integration, compare its policy with the current development
-branch and resolve the documented differences deliberately.
