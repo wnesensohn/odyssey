@@ -123,9 +123,3 @@ Measure sample arrival rates without changing engineering-unit values.
 All timestamps are UTC, and operators are identified by their controller session.
 Rejected requests do not authorize a flight command. Queue limits are independent
 of display polling intervals.
-
-## Operator label policy
-
-The `operator-label-policy` change remains under review. Regression tests cover its boundary
-behavior. Before integration, compare its policy with the current development
-branch and resolve the documented differences deliberately.
