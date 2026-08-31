@@ -67,3 +67,14 @@ pub fn propagation_interval_ms(previous_ms: u64, next_ms: u64) -> Result<u64, cr
     }
     Ok(interval)
 }
+
+pub fn next_ascending_node_s(period_s: f64, phase_rad: f64) -> Result<f64, crate::ControlError> {
+    crate::finite_in_range(period_s, 1.0, 1e7)?;
+    crate::finite_in_range(phase_rad, -std::f64::consts::PI, std::f64::consts::PI)?;
+    let phase = phase_rad.rem_euclid(2.0 * std::f64::consts::PI);
+    Ok(if phase == 0.0 {
+        0.0
+    } else {
+        period_s * (1.0 - phase / (2.0 * std::f64::consts::PI))
+    })
+}
