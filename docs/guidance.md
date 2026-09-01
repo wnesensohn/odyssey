@@ -55,9 +55,3 @@ Bound accepted estimator innovations and report rejection statistics.
 pressure in kPa, energy in Wh and mission time in milliseconds. Invalid numeric
 inputs fail before the output is applied to an actuator. Callers must handle the
 returned result; an error never authorizes an actuator transition.
-
-## Orbit crossing window
-
-The `orbit-crossing-window` change remains under review. Regression tests cover its boundary
-behavior. Before integration, compare its policy with the current development
-branch and resolve the documented differences deliberately.
