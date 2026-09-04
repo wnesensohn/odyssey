@@ -140,3 +140,9 @@ Filter the event journal without dropping severity or time context.
 The mission console renders the change through local Go templates and HTMX
 fragments. Controller authentication and flight interlocks remain authoritative.
 Labels are escaped by the template engine; no third-party asset request is needed.
+
+## Telemetry gap markers
+
+The `telemetry-gap-markers` change remains under review. Regression tests cover its boundary
+behavior. Before integration, compare its policy with the current development
+branch and resolve the documented differences deliberately.
