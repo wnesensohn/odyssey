@@ -16,3 +16,17 @@ func TestGapMarkersRetainBothEndpoints(t *testing.T) {
 		t.Fatal(gaps, err)
 	}
 }
+
+func TestGapMarkersRejectZeroInterval(t *testing.T) {
+	c, _ := NewCache(3)
+	if _, err := c.Gaps("pump", 0); err == nil {
+		t.Fatal("zero interval accepted")
+	}
+}
+func TestMissingChannelHasNoGap(t *testing.T) {
+	c, _ := NewCache(3)
+	gaps, err := c.Gaps("missing", time.Second)
+	if err != nil || len(gaps) != 0 {
+		t.Fatal(gaps, err)
+	}
+}
