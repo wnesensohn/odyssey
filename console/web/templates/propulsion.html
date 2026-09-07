@@ -11,7 +11,7 @@
   <form hx-post="/commands" hx-target="#command-result">
     <input type="hidden" name="kind" value="stop-engine">
     <input type="hidden" name="value" value="0">
-    <button type="submit" class="stop">Request engine stop</button>
+    <button type="submit" class="stop" accesskey="s" aria-keyshortcuts="S">Request engine stop</button>
   </form>
   <form hx-post="/commands" hx-target="#command-result" hx-confirm="Arm the engine? Verify the feed interlocks before proceeding.">
     <input type="hidden" name="kind" value="arm-engine">

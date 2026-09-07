@@ -182,3 +182,9 @@ case; operator procedures should handle both outcomes explicitly.
 Retain event severity filters during HTMX polling. The public interface reports rejected inputs without mutating its
 actuator or queue state. Regression tests cover the normal path and the limiting
 case; operator procedures should handle both outcomes explicitly.
+
+## Keyboard command shortcuts
+
+The `keyboard-command-shortcuts` change remains under review. Regression tests cover its boundary
+behavior. Before integration, compare its policy with the current development
+branch and resolve the documented differences deliberately.
