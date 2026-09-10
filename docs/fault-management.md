@@ -57,3 +57,9 @@ contract. Regression tests cover its boundary behavior after the move.
 Prevent clearing active faults before their quiet interval. The public interface reports rejected inputs without mutating its
 actuator or queue state. Regression tests cover the normal path and the limiting
 case; operator procedures should handle both outcomes explicitly.
+
+## Thermal settle window
+
+The `thermal-settle-window` change remains under review. Regression tests cover its boundary
+behavior. Before integration, compare its policy with the current development
+branch and resolve the documented differences deliberately.
