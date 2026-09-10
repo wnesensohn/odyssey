@@ -34,3 +34,20 @@ pub fn cooldown_stalled(
     }
     Ok(samples_k[0] - samples_k[samples_k.len() - 1] < minimum_drop_k)
 }
+
+pub fn temperature_settled(
+    samples_k: &[f64],
+    tolerance_k: f64,
+) -> Result<bool, crate::ControlError> {
+    crate::finite_in_range(tolerance_k, 0.01, 10.0)?;
+    if samples_k.len() < 5 {
+        return Err(crate::ControlError::InvalidSample);
+    }
+    let tail = &samples_k[samples_k.len() - 5..];
+    for sample in tail {
+        crate::finite_in_range(*sample, 150.0, 500.0)?;
+    }
+    let low = tail.iter().copied().fold(f64::INFINITY, f64::min);
+    let high = tail.iter().copied().fold(f64::NEG_INFINITY, f64::max);
+    Ok(high - low <= tolerance_k)
+}
