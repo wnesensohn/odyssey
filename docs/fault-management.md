@@ -63,3 +63,6 @@ case; operator procedures should handle both outcomes explicitly.
 The `thermal-settle-window` change remains under review. Regression tests cover its boundary
 behavior. Before integration, compare its policy with the current development
 branch and resolve the documented differences deliberately.
+
+Coolant stall detection now lives in `thermal::diagnostics`. The existing
+`thermal::coolant` entrypoint re-exports it for callers that have not migrated.

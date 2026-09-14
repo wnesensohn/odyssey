@@ -16,3 +16,12 @@ fn incomplete_window_is_rejected() {
 fn invalid_temperature_does_not_settle() {
     assert!(temperature_settled(&[290.0, 290.0, 290.0, 290.0, f64::NAN], 0.2).is_err());
 }
+
+#[test]
+fn diagnostic_extraction_preserves_the_coolant_api() {
+    let samples = [320.0, 320.0, 320.0];
+    let original = odyssey_flight::thermal::coolant::cooldown_stalled(&samples, 5.0);
+    let extracted = odyssey_flight::thermal::diagnostics::cooldown_stalled(&samples, 5.0);
+    assert_eq!(original, extracted);
+    assert_eq!(extracted.unwrap(), true);
+}
