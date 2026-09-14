@@ -5,7 +5,7 @@ import (
 )
 
 func ClassifyProbe(probe Probe, now time.Time, maximumAge time.Duration) string {
-	if probe.Checked.IsZero() || probe.Checked.After(now) || now.Sub(probe.Checked) > maximumAge {
+	if maximumAge <= 0 || probe.Checked.IsZero() || probe.Checked.After(now) || now.Sub(probe.Checked) > maximumAge {
 		return "stale"
 	}
 	if !probe.Healthy {

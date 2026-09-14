@@ -28,3 +28,10 @@ func TestIssue2104Invalid(t *testing.T) {
 		t.Fatal("future health accepted")
 	}
 }
+
+func TestNoZeroAgeBudgetIsHealthy(t *testing.T) {
+	now := time.Unix(100, 0)
+	if ClassifyProbe(Probe{Checked: now, Healthy: true}, now, 0) != "stale" {
+		t.Fatal("zero budget accepted")
+	}
+}
