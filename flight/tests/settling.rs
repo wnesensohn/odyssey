@@ -21,7 +21,7 @@ fn invalid_temperature_does_not_settle() {
 fn diagnostic_extraction_preserves_the_coolant_api() {
     let samples = [320.0, 320.0, 320.0];
     let original = odyssey_flight::thermal::coolant::cooldown_stalled(&samples, 5.0);
-    let extracted = odyssey_flight::thermal::diagnostics::cooldown_stalled(&samples, 5.0);
+    let extracted = odyssey_flight::thermal::thermal::cooldown_stalled(&samples, 5.0);
     assert_eq!(original, extracted);
     assert_eq!(extracted.unwrap(), true);
 }

@@ -41,4 +41,4 @@ pub fn temperature_settled(
     Ok(high - low <= tolerance_k)
 }
 
-pub use super::diagnostics::cooldown_stalled;
+pub use super::thermal::cooldown_stalled;
