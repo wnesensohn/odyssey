@@ -31,12 +31,15 @@ impl Valve {
         if self.position == ValvePosition::Jammed {
             return Err(ControlError::InterlockOpen);
         }
-        self.position = match (self.position, open) {
+        let next = match (self.position, open) {
             (ValvePosition::Closed | ValvePosition::Closing, true) => ValvePosition::Opening,
             (ValvePosition::Open | ValvePosition::Opening, false) => ValvePosition::Closing,
             (position, _) => position,
         };
-        self.elapsed_ms = 0;
+        if next != self.position {
+            self.position = next;
+            self.elapsed_ms = 0;
+        }
         Ok(())
     }
 
