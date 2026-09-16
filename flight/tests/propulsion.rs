@@ -124,3 +124,14 @@ fn empty_hardware_capacity_is_not_a_valid_tank() {
     assert!(tank.consume(0.0, 1.0).is_err());
     assert_eq!(tank.remaining_kg, 0.0);
 }
+
+#[test]
+fn repeated_valve_commands_do_not_restart_movement_timeout() {
+    use odyssey_flight::propulsion::valve::{Valve, ValvePosition};
+    let mut valve = Valve::default();
+    valve.command(true).unwrap();
+    valve.tick(false, false, 1000).unwrap();
+    valve.command(true).unwrap();
+    assert!(valve.tick(false, false, 600).is_err());
+    assert_eq!(valve.position, ValvePosition::Jammed);
+}

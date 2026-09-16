@@ -64,3 +64,9 @@ Track purge completion before returning the feed system to isolated state.
 pressure in kPa, energy in Wh and mission time in milliseconds. Invalid numeric
 inputs fail before the output is applied to an actuator. Callers must handle the
 returned result; an error never authorizes an actuator transition.
+
+## Repeated valve command
+
+The `repeated-valve-command` change remains under review. Regression tests cover its boundary
+behavior. Before integration, compare its policy with the current development
+branch and resolve the documented differences deliberately.
