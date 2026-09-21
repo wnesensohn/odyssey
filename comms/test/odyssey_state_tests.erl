@@ -42,3 +42,7 @@ malformed_reservation_returns_error_test() ->
     W = odyssey_window:new(2, 100),
     ?assertMatch({error, _}, odyssey_window:reserve(W, 0, <<>>)),
     ?assertEqual(0, odyssey_window:size(W)).
+
+invalid_heartbeat_clock_is_rejected_test() ->
+    H = odyssey_heartbeat:new(100),
+    ?assertEqual({error, invalid_clock}, odyssey_heartbeat:observe(H, invalid)).

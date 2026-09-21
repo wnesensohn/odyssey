@@ -9,7 +9,9 @@ observe(Heartbeat, NowMs) when is_integer(NowMs) ->
     case maps:get(last_seen, Heartbeat) of
         Last when is_integer(Last), NowMs < Last -> {error, time_reversed};
         _ -> {ok, Heartbeat#{last_seen := NowMs, received := maps:get(received, Heartbeat) + 1}}
-    end.
+    end;
+observe(_, _) ->
+    {error, invalid_clock}.
 
 state(Heartbeat, NowMs) ->
     case maps:get(last_seen, Heartbeat) of
