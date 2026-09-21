@@ -91,3 +91,9 @@ Report pending-window backpressure to command callers.
 `comms/src/transport/odyssey_session.erl` exposes `pending_state/2`. Link times are monotonic
 milliseconds; sequence fields use unsigned network byte order. Rejection is
 reported to the caller and must not be converted into an acknowledged delivery.
+
+## Invalid heartbeat clock
+
+The `invalid-heartbeat-clock` change remains under review. Regression tests cover its boundary
+behavior. Before integration, compare its policy with the current development
+branch and resolve the documented differences deliberately.
